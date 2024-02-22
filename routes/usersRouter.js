@@ -11,10 +11,10 @@ const {
 } = require("../controllers/usersController");
 const { protectRoutes } = require("../middleware/authMiddleware");
 
-router.post("/createUser", createUser);
+router.post("/create", createUser);
 router.post("/loginUser", LoginUser);
-router.get("/getLoginUser", getAllUser);
-router.post("/userforgotpassword", forgotPassword);
+router.get("/getUser", getAllUser);
+router.post("/forgotpassword", forgotPassword);
 router.delete("/deleteUser/:id", deleteUser);
 router.put("/updateUser/:id", updateUser);
 

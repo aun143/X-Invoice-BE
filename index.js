@@ -1,13 +1,13 @@
 const express = require("express");
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const cors = require("cors");
 const { connectToDatabase } = require("./database/dbConnection");
-const { usersRouter } = require("./routes/usersRouter");
-const { businessRouter } = require("./routes/businessRouter ");
-const { clientRouter } = require("./routes/clientRouter");
-const { invoiceRouter } = require("./routes/invoiceRouter");
-const { uploadRouter } = require("./routes/uploadRouter");
-const { emailRouter } = require("./routes/emailRouter");
+// const { usersRouter } = require("./routes/usersRouter");
+// const { businessRouter } = require("./routes/businessRouter ");
+// const { clientRouter } = require("./routes/clientRouter");
+// const { invoiceRouter } = require("./routes/invoiceRouter");
+// const { uploadRouter } = require("./routes/uploadRouter");
+// const { emailRouter } = require("./routes/emailRouter");
 const { router } = require("./routes/index");
 // const pdfRoutes = require("./routes/pdfRoutes");
 require("dotenv").config();
@@ -23,8 +23,8 @@ app.use(cors());
 //     next(err);
 //   }
 // });
-app.use(bodyParser.json({ limit: '50mb' })); // Adjust the limit as needed
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+// app.use(bodyParser.json({ limit: '50mb' })); // Adjust the limit as needed
+// app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 
 app.use(express.json());
@@ -32,7 +32,7 @@ app.use(express.json());
 
 app.use('/api', router);
 
-app.use('/*', (req,res)=>res.send('404 error'))
+// app.use('/*', (req,res)=>res.send('404 errdcaor'))
 // app.use("/login", usersRouter);
 // app.use("/business", businessRouter);
 // app.use("/client", clientRouter);
