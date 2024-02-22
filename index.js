@@ -8,12 +8,13 @@ const { clientRouter } = require("./routes/clientRouter");
 const { invoiceRouter } = require("./routes/invoiceRouter");
 const { uploadRouter } = require("./routes/uploadRouter");
 const { emailRouter } = require("./routes/emailRouter");
+const { router } = require("./routes/index");
 // const pdfRoutes = require("./routes/pdfRoutes");
+require("dotenv").config();
 
 const app = express();
 
 app.use(cors());
-require("dotenv").config();
 
 // app.use((err, req, res, next) => {
 //   if (err.name === 'CORSError') {
@@ -28,18 +29,28 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 app.use(express.json());
 
-connectToDatabase();
 
-app.use("/login", usersRouter);
-app.use("/business", businessRouter);
-app.use("/client", clientRouter);
-app.use("/invoices", invoiceRouter);
-app.use("/upload", uploadRouter);
-app.use("/email", emailRouter);
+app.use('/api', router);
+
+app.use('/*', (req,res)=>res.send('404 error'))
+// app.use("/login", usersRouter);
+// app.use("/business", businessRouter);
+// app.use("/client", clientRouter);
+// app.use("/invoices", invoiceRouter);
+// app.use("/upload", uploadRouter);
+// app.use("/email", emailRouter);
 // app.use("/pdf", pdfRoutes);
-app.use('*', (req, res) => res.send('X-Invoice Backend Routing Not Found'))
+// app.use('/*', (req, res) => res.send('X-Invoice Backend Routing Not Found'))
+const appPromise= async()=>{
+  const PORT = process.env.PORT || 9001;
+  await connectToDatabase();
+  
+  app.listen(PORT, () => {
+    console.log("Server listening on port".blue, PORT.toString().green);
+  });
+  
+}
+appPromise()
 
-const PORT = process.env.PORT || 9001;
-app.listen(PORT, () => {
-  console.log("Server listening on port".blue, PORT.toString().green);
-});
+
+module.exports= app
