@@ -159,7 +159,7 @@ const generatePDF = async (req, res) => {
     res.end();
     await browser.close();
   } catch (error) {
-    console.error(error);
+    console.error('PDF Generate', error);
     res.status(500).send("Internal Server Error");
   }
 };
