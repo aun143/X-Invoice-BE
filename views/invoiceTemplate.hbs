@@ -1,4 +1,3 @@
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -39,16 +38,18 @@
         {{!-- <li>Quantity: {{quantity}}</li>
         <li>Amount: {{amount}}</li> --}}
         <li>Total Invoice Amount: {{total}}</li>
-<li><strong>PaymentStatus:</strong> {{ paymentStatus }}</li>
+        <li><strong>PaymentStatus:</strong> {{paymentStatus}}</li>
         <li>Due Date: {{invoiceDueDate}}</li>
       </ul>
 
       {{!-- <p>You can view the invoice or download a PDF copy of it from the
         following link:
         {{!-- {{http://localhost:3010/pdf/generate?userId=65aa78568d6f3d1a7f909e1c&businessId=65ae51d686cd12e52252859d&invoiceId=65b35e67f7201b0951c95bfa}}</p> --}}
-{{!-- <p>Click the following link: <a href="http://localhost:3010/pdf/generate?userId=65aa78568d6f3d1a7f909e1c&businessId=65ae51d686cd12e52252859d&invoiceId=65b35e67f7201b0951c95bfa" target="_blank">Generate PDF</a></p> --}} 
+      {{! <p>Click the following link: <a href="http://localhost:3010/pdf/generate?userId=65aa78568d6f3d1a7f909e1c&businessId=65ae51d686cd12e52252859d&invoiceId=65b35e67f7201b0951c95bfa" target="_blank">Generate PDF</a></p> }}
 
       <footer>
+        {{!-- Download From: --}}
+        <p>Pdf Link: {{pdfUrl}}</p>
         <p>Best regards, {{sender.firstName}}</p>
       </footer>
     </div>

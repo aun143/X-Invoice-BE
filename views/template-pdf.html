@@ -1,262 +1,194 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Information PDF</title>
-  <style>
-   
-  /* #itemsContainer {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    margin-top: 20px;
-  } */
-
-
-  #itemsContainer > div {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    max-width:100%;
-    margin-bottom: 2px;  
-  }
-
-
-  #itemsContainer > div >  p >p {
-   
-    margin: 50px 0;
-    max-width:25%;
-
-
-  }
-
-
-  /* #itemsContainer > div > p > strong {
-    margin:6px 0px;
-    display: flex;
-    width: 100px;
-  } */
-
-
-  /* #itemsContainer > div >  p > span {
-    display: inline-block;
-  } */
-    .container {
-      margin: 40px;
-    }
-
-
-    .section {
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Information PDF</title>
+    <style>
+    #itemsContainer > div {
       display: flex;
       justify-content: space-between;
       flex-direction: row;
+      max-width:100%;
+      margin-bottom: 2px;  
+    }
+    #itemsContainer > div >  p >p {
+    
+      margin: 50px 0;
+      max-width:25%;
+
+
     }
 
 
-    .section-left,
-    .section-right {
-      width: 50%;
-     
-    }
+
+      .container {
+        margin: 40px;
+      }
 
 
-    .section-left {
-      display: flex;
-      flex-direction: column;
-    }
+      .section {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+      }
 
 
-    .section-right {
-      margin:2%  20px;
-      text-align: left;
-    }
+      .section-left,
+      .section-right {
+        width: 50%;
+      
+      }
 
 
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    span{
-      margin-top: 3px;
+      .section-left {
+        display: flex;
+        flex-direction: column;
+      }
 
 
-    }
-    th,
-    td {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
-    }
+      .section-right {
+        margin:2%  20px;
+        text-align: left;
+      }
 
 
-    th {
-      background-color: #f2f2f2;
-      text-align: center;
-    }
-    #paymentStatus {
-    padding: 10px 20px;
-    font-weight: bold;
-    border: 1px solid black;
-    font-size: 12px;
-    border-radius: 5px;
-}
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      span{
+        margin-top: 3px;
+
+
+      }
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+
+      th {
+        background-color: #f2f2f2;
+        text-align: center;
+      }
+      #paymentStatus {
+      padding: 10px 20px;
+      font-weight: bold;
+      border: 1px solid black;
+      font-size: 12px;
+      border-radius: 5px;
+  }
 
 
 
 
 
 
-  </style>
-</head>
+    </style>
+  </head>
 
 
-<body>
-  <div style="margin: 40px;">
-    <h3>INVOICE</h3>
-    <p><span id="description"></span></p>
-  <div class="section">
-    <div class="section-left">
-      <p><strong>From:</strong></p>
-     <p> <span id="firstNameFrom"></span>
-      <span id="lastNameFrom"></span><br>
-  <span id="address1From"></span><br>
-    <span id="postalCodeFrom"></span> <span id="cityFrom"></span><br>
-    <span id="countryFrom"></span></p>
+  <body>
+    <div style="margin: 40px;">
+      <h3>INVOICE</h3>
+      <p><span id="description"></span></p>
+    <div class="section">
+      <div class="section-left">
+        <p><strong>From:</strong></p>
+      <p> <span id="firstNameFrom"></span>
+        <span id="lastNameFrom"></span><br>
+    <span id="address1From"></span><br>
+      <span id="postalCodeFrom"></span> <span id="cityFrom"></span><br>
+      <span id="countryFrom"></span></p>
+      </div>
+
+
+      <div class="section-right">
+        <p ><strong >Invoice No.:</strong> <br> <span id="invoiceNumber"></span></p>
+        <p><strong>Date:</strong><br> <span id="date"></span></p>
+      </div>
     </div>
 
 
-    <div class="section-right">
-      <!-- <img src="./3x.png" alt="no Logo"> -->
-      <p ><strong >Invoice No.:</strong> <br> <span id="invoiceNumber"></span></p>
-      <p><strong>Date:</strong><br> <span id="date"></span></p>
+    <div class="section">
+      <div class="section-left">
+        <p><strong>To:</strong></p><p>
+  <span id="firstNameTo"></span> <span id="lastNameTo"></span><br>
+    <span id="address1To"></span><br>
+  <span id="postalCodeTo"></span> <span id="cityTo"></span><br>
+    <span id="countryTo"></span></p><br>
+      </div>
+      <div class="section-right">
+        <p><strong>Purchase Order Number:</strong><br> <span id="purchaseOrderNumber"></span></p>
+        <p><strong>Invoice Due:</strong><br> <span id="invoiceDueDate"></span></p>
+      </div>
     </div>
-  </div>
 
 
-  <div class="section">
-    <div class="section-left">
-      <p><strong>To:</strong></p><p>
- <span id="firstNameTo"></span> <span id="lastNameTo"></span><br>
-  <span id="address1To"></span><br>
-<span id="postalCodeTo"></span> <span id="cityTo"></span><br>
-   <span id="countryTo"></span></p><br>
-    </div>
-    <div class="section-right">
-      <p><strong>Purchase Order Number:</strong><br> <span id="purchaseOrderNumber"></span></p>
-      <p><strong>Invoice Due:</strong><br> <span id="invoiceDueDate"></span></p>
-    </div>
-  </div>
+      <hr /><div style="display: flex; justify-content: space-between;">
+      <p><strong>Description</strong></p>
+      <p><strong>Quantity</strong></p>
+      <p><strong>Rate</strong></p>
+      <p><strong>Amount</strong></p></div>
+      <p id="itemsContainer" >
+  
 
-
-    <hr /><div style="display: flex; justify-content: space-between;">
-    <p><strong>Description</strong></p>
-    <p><strong>Quantity</strong></p>
-    <p><strong>Rate</strong></p>
-    <p><strong>Amount</strong></p></div>
-    <p id="itemsContainer" >
-   <!-- <table> -->
-  <!-- <thead>
-    <tr>
-      <th>Description</th>
-      <th>Quantity</th>
-      <th>Rate</th>
-      <th>Amount</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each items}}
-    <tr>
-      <td>{{this.description}}</td>
-      <td>{{this.quantity}}</td>
-      <td>{{this.rate}}</td>
-      <td>{{this.amount}}</td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table> -->
-
-
-    </p>
-<!-- <div id="itemsContainer" style="display: flex; justify-content: space-between; flex-direction: column;">
-  {{#each items}}
-  <div style="display: flex; flex-direction: row;">
- <strong>Description:</strong>
- <strong>Quantity:</strong>
- <strong>Rate:</strong>
-  </div>
-  {{/each}}
-
-
-  {{#each items}}
-  <div style="display: flex; flex-direction: row;">
-<span>{{this.description}}</span>
- <span>{{this.quantity}}</span>
-  <span>{{this.rate}}</span>
-
-
-  </div>
-  {{/each}}
-</div> -->
+      </p>
+ 
 
 
 
+      <hr />
 
-    <hr />
+
+      <div style="display: flex; justify-content: space-between; margin-left: 200px">
+        <div style="text-align: left">
+          <p><strong>Subtotal:</strong></p>
+          <p><strong>Total:</strong></p>
+          <p style="text-align: center; background-color: gray; padding: 10px">
+        
+              <strong
+              id="paymentStatus">
+                Balance:
+                </strong>
+        
+        
+          </p>
+        </div>
 
 
-    <div style="display: flex; justify-content: space-between; margin-left: 200px">
-      <div style="text-align: left">
-        <p><strong>Subtotal:</strong></p>
-        <p><strong>Total:</strong></p>
-        <!-- <p><strong>Paid to Date:</strong></p> -->
-        <p style="text-align: center; background-color: gray; padding: 10px">
-       
-            <strong
-            id="paymentStatus">
-              Balance:
-              </strong>
-       
-       
+        <div style="text-align: right">
+          <p><span id="subtotal"></span></p>
+          <p><span id="total"></span></p>
+          <p><span id="total"></span></p>
+        </div>
+
+
+      </div>
+      <div>
+        <p><strong>Invoice Notes:</strong></p>
+        <p><span id="notes"></span></p>
+      </div>
+      <hr />
+      <div style="display: flex">
+        <p><strong>Email:</strong>
+        <p><span id="email"></span></p>
         </p>
       </div>
 
 
-      <div style="text-align: right">
-        <p><span id="subtotal"></span></p>
-        <p><span id="total"></span></p>
-        <!-- <p><span id="invoiceDueDate"></span></p> -->
-        <p><span id="total"></span></p>
-      </div>
-
-
-    </div>
-    <div>
-      <p><strong>Invoice Notes:</strong></p>
-      <p><span id="notes"></span></p>
-    </div>
-    <hr />
-    <div style="display: flex">
-      <p><strong>Email:</strong>
-      <p><span id="email"></span></p>
-      </p>
-      <!-- <p><strong>Organization Name:</strong>   <p><span id="organizationNameFrom"></span></p></p> -->
     </div>
 
 
-  </div>
+  
+    </div>
+    </div>
 
 
-  <!-- <div style="text-align: center;">
-    <p>Click the following link: <a id="generatePdfLink" href="#" target="_blank">Generate PDF</a></p>
-  </div> -->
-
-
-  </div>
-  </div>
-
-
-</body>
-</html>
+  </body>
+  </html>

@@ -1,21 +1,67 @@
+const { BusinessProfile } = require("../models/businessModel");
+const { ClientDetail } = require("../models/clientModel");
 const { InvoiceDetail } = require("../models/invoiceModel");
 const validStatusValues = ["pending", "paid", "unpaid"];
 
 const createInvoice = async (req, res) => {
   try {
+    const { receiver, sender } = req.body;
+
     const user = req.user._id;
     req.body.user = user;
-    
-    const newinvoice = await InvoiceDetail.create(req.body);
-    res.status(200).send(newinvoice);
-    //console.log("Newinvoice", newinvoice);
+
+    let client, business;
+
+    try {
+      client = await ClientDetail.findById(receiver);
+      business = await BusinessProfile.findById(sender);
+    } catch (error) {
+      return res.status(400).send({ message: "Invalid receiver or sender ID format" });
+    }
+
+    if (!client || !business) {
+      return res.status(404).send({ message: "Client or business not found" });
+    }
+
+    // Create a new Mongoose Document instance
+    const newInvoice = new InvoiceDetail({
+      ...req.body,
+      receiver: client.toObject(), // Store client object
+      sender: business.toObject(), // Store business object
+    });
+
+    // Save the document to the database
+    await newInvoice.save();
+
+    // Exclude 'data' field from 'receiver' and 'sender' when sending the response
+    const { data, ...invoiceWithoutData } = newInvoice.receiver;
+
+    res.status(200).send({ ...newInvoice.toObject(), receiver: invoiceWithoutData });
   } catch (error) {
     res.status(500).send({
-      message:
-        error.message || "Some error occurred while creating the Invoice.",
+      message: error.message || "Some error occurred while creating the Invoice.",
     });
   }
 };
+
+// const createInvoice = async (req, res) => {
+//   try {
+//     const user = req.user._id;
+//     req.body.user = user;
+    
+//     const newinvoice = await InvoiceDetail.create(req.body);
+//     res.status(200).send(newinvoice);
+//     //console.log("Newinvoice", newinvoice);
+//   } catch (error) {
+//     res.status(500).send({
+//       message:
+//         error.message || "Some error occurred while creating the Invoice.",
+//     });
+//   }
+// };
+
+
+
 
 const getInvoiceById = async (req, res) => {
   try {

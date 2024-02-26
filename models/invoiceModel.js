@@ -95,6 +95,10 @@ const InvoiceSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  pdfUrl: {
+    type: String,
+    required: false
+},
   items: [
     {
       description: {
@@ -116,7 +120,8 @@ const InvoiceSchema = new mongoose.Schema({
       amount: {
         type: Number,
         required: false,
-      },
+      }, 
+  
     }
   ],
 });
