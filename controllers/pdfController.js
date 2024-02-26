@@ -248,7 +248,7 @@ const generatePDF = async (req, res) => {
 
     // res.sendFile(path.join(__dirname, '../views/output.pdf'));
   } catch (error) {
-    console.error(error);
+    console.error('PDF Generate', error);
     res.status(500).send("Internal Server Error");
   }
 };

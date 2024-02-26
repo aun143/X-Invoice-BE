@@ -6,7 +6,19 @@ require("dotenv").config();
 
 const app = express();
 
-app.use(cors());
+app.use(cors('*'));
+
+// app.use((err, req, res, next) => {
+//   if (err.name === 'CORSError') {
+//     res.status(403).json({ error: 'CORS error: Origin not allowed' });
+//   } else {
+//     next(err);
+//   }
+// });
+// app.use(bodyParser.json({ limit: '50mb' })); // Adjust the limit as needed
+// app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
+
 app.use(express.json());
 app.use('/api', router);
 
