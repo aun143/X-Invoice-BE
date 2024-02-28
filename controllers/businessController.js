@@ -84,15 +84,6 @@ function isValidEmail(email) {
   return emailRegex.test(email);
 }
 
-// function isValidUrl(string) {
-//   try {
-//     new URL(string);
-//     return true;
-//   } catch (_) {
-//     return false;
-//   }
-// }
-
 const getAllBusinessProfile = async (req, res) => {
   try {
     const records = await BusinessProfile.find();

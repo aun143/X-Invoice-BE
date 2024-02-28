@@ -36,7 +36,6 @@ const createUser = async (req, res) => {
 
     if (!user) {
       const data = await userModel.create(reqData);
-      // Generate token upon successful account creation
       const token = generarteToken(data);
       return res.status(200).json({
         type: "success",
@@ -131,7 +130,6 @@ const getAllUser = async (req, res) => {
     const records = await userModel.find();
 
     res.status(200).send(records);
-    //console.log("Get All User", records);
   } catch (error) {
     res.status(500).send({
       message:
@@ -149,7 +147,6 @@ const getProfile = async (req, res) => {
       .populate("individualProfile organizationProfile");
 
     res.status(200).send(records);
-    //console.log("Get All User", records);
   } catch (error) {
     res.status(500).send({
       message:
@@ -193,7 +190,6 @@ const updateUser = async (req, res) => {
     }
     const recordId = req.params.id;
     const updateData = req.body;
-
     const updatedRecord = await userModel.findByIdAndUpdate(
       recordId,
       updateData,
@@ -205,7 +201,6 @@ const updateUser = async (req, res) => {
     }
 
     res.status(200).send(updatedRecord);
-    //console.log("Updated Record", updatedRecord);
   } catch (error) {
     res.status(500).send({
       message:
