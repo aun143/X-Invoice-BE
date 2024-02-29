@@ -1,6 +1,4 @@
 
-
-
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 const { ClientDetail } = require("../models/clientModel");
@@ -285,9 +283,7 @@ const generatePDF = async (req, res) => {
           <p><span id="email">${businessData.email}</span></p>
           <p><span>Powerd By AccellionX</span></p>
         </div>
-        <div>
-          <img src="${req.uploadedFileUrl}" alt="Uploaded Image">
-        </div>
+   
       </div>
       </div>
     </body>

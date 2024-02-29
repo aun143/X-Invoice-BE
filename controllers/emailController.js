@@ -19,9 +19,9 @@ const sendEmailFile = async (req, res) => {
             invoiceDueDate: invoice.invoiceDueDate,
             invoiceLink: invoice.invoiceLink,
             sender: invoice.sender,
-            pdfUrl: invoice.pdfUrl
+            // pdfUrl: invoice.pdfUrl
         };
-
+        
         await emailModel.send(to, subject, data);
 
         res.status(200).json({ message: "Email Sent Successfully XInvoicely" });
