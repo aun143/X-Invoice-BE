@@ -54,7 +54,8 @@ const generatePDF = async (req, res) => {
       { _id: businessIdToGeneratePDF },
       { _id: invoiceIdToGeneratePDF }
     );
-
+const date = new Date(invoiceData.date).toLocaleDateString();
+    const invoiceDueDate = new Date(invoiceData.invoiceDueDate).toLocaleDateString();
 
     // console.log("clientData>>>>>>>>", clientData);
     // console.log("businessData>>>>>>>>", businessData);
@@ -193,7 +194,7 @@ const generatePDF = async (req, res) => {
           </div>
           <div class="section-right">
             <p><strong>Invoice No: </strong>${invoiceData.invoiceNumber} <span id="invoiceNumber"></span></p>
-            <p><strong>Date: </strong> ${invoiceData.invoiceDueDate}<span id="date"></span></p>
+            <p><strong>Date: </strong> ${date}<span id="date"></span></p>
 
 
 
@@ -216,7 +217,7 @@ const generatePDF = async (req, res) => {
           </div>
           <div class="section-right">
             <p><strong>Purchase Order Number:</strong>${invoiceData.purchaseOrderNumber} <span id="purchaseOrderNumber"></span></p>
-            <p><strong>Invoice Due:</strong>${invoiceData.invoiceDueDate} <span id="invoiceDueDate"></span></p>
+            <p><strong>Invoice Due:</strong>${invoiceDueDate} <span id="invoiceDueDate"></span></p>
           </div>
         </div>
         <hr />
@@ -384,9 +385,11 @@ module.exports = {
 //       { _id: businessIdToGeneratePDF },
 //       { _id: invoiceIdToGeneratePDF }
 //     );
-//     // console.log("clientData>>>>>>>>", clientData);
-//     // console.log("businessData>>>>>>>>", businessData);
-//     // console.log("invoiceData>>>>>>>>", invoiceData);
+//     const date = new Date(invoiceData.date).toLocaleDateString();
+//     const invoiceDueDate = new Date(invoiceData.invoiceDueDate).toLocaleDateString();
+//     console.log("clientData>>>>>>>>", clientData);
+//     console.log("businessData>>>>>>>>", businessData);
+//     console.log("invoiceData>>>>>>>>", invoiceData);
 
 //     let options = { format: 'A4' };
 
@@ -476,8 +479,8 @@ module.exports = {
 //       <div class="section">
 //         <div class="section-left">
 //           <p><strong>From:</strong></p>
-//           <p>${businessData.lastName}</p>
 //           <p>${businessData.firstName}</p>
+//           <p>${businessData.lastName}</p>
 //           <p>${businessData.address1}</p>
 //           <p>${businessData.city}</p>
 //           <p>${businessData.country}</p>
@@ -486,7 +489,7 @@ module.exports = {
 //         </div>
 //         <div class="section-right">
 //           <p><strong>Invoice No: </strong>${invoiceData.invoiceNumber} <span id="invoiceNumber"></span></p>
-//           <p><strong>Date: </strong> ${invoiceData.invoiceDueDate}<span id="date"></span></p>
+//           <p><strong>Date: </strong> ${date}<span id="date"></span></p>
 
 
 
@@ -509,7 +512,7 @@ module.exports = {
 //         </div>
 //         <div class="section-right">
 //           <p><strong>Purchase Order Number:</strong>${invoiceData.purchaseOrderNumber} <span id="purchaseOrderNumber"></span></p>
-//           <p><strong>Invoice Due:</strong>${invoiceData.invoiceDueDate} <span id="invoiceDueDate"></span></p>
+//           <p><strong>Invoice Due:</strong>${invoiceDueDate} <span id="invoiceDueDate"></span></p>
 //         </div>
 //       </div>
 //       <hr />

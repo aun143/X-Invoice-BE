@@ -1,7 +1,7 @@
 const { BusinessProfile } = require("../models/businessModel");
 const { ClientDetail } = require("../models/clientModel");
 const { InvoiceDetail } = require("../models/invoiceModel");
-const validStatusValues = ["pending", "paid", "unpaid"];
+const validStatusValues = ["Pending", "Paid", "Unpaid"];
 
 // const createInvoice = async (req, res) => {
 //   try {
