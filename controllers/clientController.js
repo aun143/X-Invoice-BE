@@ -44,26 +44,15 @@ function isValidEmail(email) {
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   return emailRegex.test(email);
 }
-
 const getAllClient = async (req, res) => {
   try {
     const userId = req.user._id;
 
     const allClient = await ClientDetail.find({ user: userId });
-    const page = parseInt(req.query.page) || 1;
-    const pageSize = parseInt(req.query.pageSize) || 10;
-
-    const startIndex = (page - 1) * pageSize;
-    const endIndex = page * pageSize;
-
-    const paginatedRecords = allClient.slice(startIndex, endIndex);
 
     res.status(200).send({
-      page,
-      pageSize,
       totalItems: allClient.length,
-      totalPages: Math.ceil(allClient.length / pageSize),
-      data: paginatedRecords,
+      data: allClient,
     });
   } catch (error) {
     res.status(500).send({
@@ -73,6 +62,35 @@ const getAllClient = async (req, res) => {
     });
   }
 };
+
+// const getAllClient = async (req, res) => {
+//   try {
+//     const userId = req.user._id;
+
+//     const allClient = await ClientDetail.find({ user: userId });
+//     const page = parseInt(req.query.page) || 1;
+//     const pageSize = parseInt(req.query.pageSize) || 10;
+
+//     const startIndex = (page - 1) * pageSize;
+//     const endIndex = page * pageSize;
+
+//     const paginatedRecords = allClient.slice(startIndex, endIndex);
+
+//     res.status(200).send({
+//       page,
+//       pageSize,
+//       totalItems: allClient.length,
+//       totalPages: Math.ceil(allClient.length / pageSize),
+//       data: paginatedRecords,
+//     });
+//   } catch (error) {
+//     res.status(500).send({
+//       message:
+//         error.message ||
+//         "Some error occurred while retrieving clients.",
+//     });
+//   }
+// };
 
 const getClientById = async (req, res) => {
   try {
