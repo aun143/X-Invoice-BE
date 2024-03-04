@@ -22,6 +22,9 @@ const ClientSchema = new mongoose.Schema({
   lastName: {
     type: String,
     required: true,
+  }, language: {
+    type: String,
+    required: true,
   },
   email: {
     type: String,

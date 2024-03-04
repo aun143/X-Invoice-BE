@@ -20,12 +20,12 @@ const createBusinessProfile = async (req, res) => {
     if (!isValidEmail(profileBody.email)) {
       return res.status(400).json({ type: "bad", message: "Email must be valid and contain '@'" });
     }
-    if (!/^[a-z A-Z 0-9 ,]+$/.test(profileBody.address1)) {
-      return res.status(400).json({ type: "bad", message: "Address1 must contain only letters and numbers." });
-    }
-    if (!/^[a-z A-Z 0-9 ,]+$/.test(profileBody.address2)) {
-      return res.status(400).json({ type: "bad", message: "Address2 must contain only letters from A-Z and a-z" });
-    }
+    // if (!/^[a-z A-Z 0-9 ,]+$/.test(profileBody.address1)) {
+    //   return res.status(400).json({ type: "bad", message: "Address1 must contain only letters and numbers." });
+    // }
+    // if (!/^[a-z A-Z 0-9 ,]+$/.test(profileBody.address2)) {
+    //   return res.status(400).json({ type: "bad", message: "Address2 must contain only letters from A-Z and a-z" });
+    // }
     if (!/^[a-z A-Z]+$/.test(profileBody.city)) {
       return res.status(400).json({ type: "bad", message: "City must contain only letters from A-Z and a-z" });
     }
@@ -162,12 +162,12 @@ const updateBusinessProfile = async (req, res) => {
       return res.status(400).json({ type: "bad", message: "Email must be valid and contain '@'" });
     }
     
-    if (!/^[a-z A-Z 0-9 ,]+$/.test(updateData.address1)) {
-      return res.status(400).json({ type: "bad", message: "Address1 must contain only letters from A-Z and a-z" });
-    }
-    if (!/^[a-z A-Z 0-9 ,]+$/.test(updateData.address2)) {
-      return res.status(400).json({ type: "bad", message: "Address2 must contain only letters from A-Z and a-z" });
-    }
+    // if (!/^[a-z A-Z 0-9 ,]+$/.test(updateData.address1)) {
+    //   return res.status(400).json({ type: "bad", message: "Address1 must contain only letters from A-Z and a-z" });
+    // }
+    // if (!/^[a-z A-Z 0-9 ,]+$/.test(updateData.address2)) {
+    //   return res.status(400).json({ type: "bad", message: "Address2 must contain only letters from A-Z and a-z" });
+    // }
     if (!/^[a-z A-Z]+$/.test(updateData.city)) {
       return res.status(400).json({ type: "bad", message: "City must contain only letters from A-Z and a-z" });
     }
