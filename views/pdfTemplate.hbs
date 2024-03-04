@@ -67,7 +67,9 @@ p{
             background-color: #f2f2f2;
             text-align: center;
         }
-
+td.center {
+    text-align: center;
+}
 
 
 
@@ -139,16 +141,16 @@ p{
                         <th>Amount</th>
                     </tr>
                 </thead>
-                <tbody id="itemsContainer">
-                    {{#each invoiceData.items}}
-                    <tr>
-                        <td>{{this.description}}</td>
-                        <td>{{this.quantity}}</td>
-                        <td>{{this.rate}}</td>
-                        <td>{{this.amount}}</td>
-                    </tr>
-                    {{/each}}
-                </tbody>
+             <tbody id="itemsContainer">
+    {{#each invoiceData.items}}
+    <tr>
+        <td class="center">{{this.description}}</td>
+        <td class="center">{{this.quantity}}</td>
+        <td class="center">{{this.rate}}</td>
+        <td class="center">{{this.amount}}</td>
+    </tr>
+    {{/each}}
+</tbody>
             </table>
         </div>
 
