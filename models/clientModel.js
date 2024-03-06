@@ -29,6 +29,12 @@ const ClientSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+  },file: {
+    type: String,
+    required: false,
+  },url: {
+    type: String,
+    required: false,
   },
   phone: {
     type: Number,

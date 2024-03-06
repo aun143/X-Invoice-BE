@@ -78,12 +78,16 @@ const InvoiceSchema = new mongoose.Schema({
     type: Number,
     required: false,
   }, 
-  logoPreview: {
+  file: {
     type: String,
     required: false,
   },
   total: {
     type: Number,
+    required: false,
+    default: 0,
+  },url: {
+    type: String,
     required: false,
     default: 0,
   },

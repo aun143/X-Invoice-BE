@@ -20,6 +20,12 @@ const BusinessProfileSchema = new mongoose.Schema({
   phone: {
     type: Number,
     required: false,
+  },file: {
+    type: String,
+    required: false,
+  },url: {
+    type: String,
+    required: false,
   },
   address1: {
     type: String,

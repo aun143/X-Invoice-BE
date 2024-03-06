@@ -77,10 +77,25 @@ td.center {
   </head>
 <body>
     <div style="margin: 40px;"><h2 style="display:flex; justify-content:center;">X-INVOICE</h2>
-     <h3 style="margin-left:10px;"><span style="border:1px solid black; padding:3px; ">{{invoiceData.paymentStatus}}</span><span style="margin-left: 12px;">{{invoiceData.invoiceName}}</span></h3>
-       {{!-- <img src="./assets/multipleperson.png" alt="LOGO" style="max-width: 100%;  margin-left:70%;"> --}}
-      <p>
-      <span id="description">{{invoiceData.description}}</span></p>
+  <div style="display:flex;">
+    <div style="flex: 1;">
+        <h3 style="margin-left:10px;">
+            <span style="border:1px solid black; padding:3px;">{{invoiceData.paymentStatus}}</span>
+            <span style="margin-left: 12px;">{{invoiceData.invoiceName}}</span>
+        </h3>
+        <p>
+            <span id="description">{{invoiceData.description}}</span>
+        </p>
+    </div>
+    <div style="display:flex; justify-content:flex-start; align-items:flex-end;">
+       {{#if invoiceData.url}}
+            <img src="{{invoiceData.url}}" alt="Invoice Image" style="width:12rem; margin-right:2rem; border:1px solid black;">
+        {{else}}
+            <img src="https://res.cloudinary.com/dfbsbullu/image/upload/v1709745593/iribv5nqn6iovph3buhe.png" alt="Static Image" style="width:6rem; margin-right:6rem;">
+        {{/if}}
+    </div>
+</div>
+
     <div class="section">
       <div class="section-left">
         <p><strong>From:</strong></p>
