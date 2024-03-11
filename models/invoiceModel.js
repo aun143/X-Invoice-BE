@@ -74,10 +74,10 @@ const InvoiceSchema = new mongoose.Schema({
     default: null,
     required: false,
   },
- subtotal: {
+  subtotal: {
     type: Number,
     required: false,
-  }, 
+  },
   file: {
     type: String,
     required: false,
@@ -86,7 +86,8 @@ const InvoiceSchema = new mongoose.Schema({
     type: Number,
     required: false,
     default: 0,
-  },url: {
+  },
+  url: {
     type: String,
     required: false,
     default: 0,
@@ -101,8 +102,8 @@ const InvoiceSchema = new mongoose.Schema({
   },
   pdfUrl: {
     type: String,
-    required: false
-},
+    required: false,
+  },
   items: [
     {
       description: {
@@ -124,9 +125,8 @@ const InvoiceSchema = new mongoose.Schema({
       amount: {
         type: Number,
         required: false,
-      }, 
-  
-    }
+      },
+    },
   ],
 });
 

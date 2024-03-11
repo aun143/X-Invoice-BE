@@ -4,21 +4,47 @@ const { userModel } = require("../models/usersModel");
 const createBusinessProfile = async (req, res) => {
   try {
     const { userId, profileBody } = req.body;
-    const requiredFields = ['firstName', 'lastName', 'address1', 'city', 'country', 'email'];
+    const requiredFields = [
+      "firstName",
+      "lastName",
+      "address1",
+      "city",
+      "country",
+      "email",
+    ];
 
     for (const field of requiredFields) {
       if (!profileBody[field]) {
-        return res.status(400).json({ type: "bad", message: `${field.charAt(0).toUpperCase() + field.slice(1)} is required` });
+        return res
+          .status(400)
+          .json({
+            type: "bad",
+            message: `${
+              field.charAt(0).toUpperCase() + field.slice(1)
+            } is required`,
+          });
       }
     }
     if (!/^[a-z A-Z]+$/.test(profileBody.firstName)) {
-      return res.status(400).json({ type: "bad", message: "firstName must contain only letters from A-Z and a-z" });
+      return res
+        .status(400)
+        .json({
+          type: "bad",
+          message: "firstName must contain only letters from A-Z and a-z",
+        });
     }
     if (!/^[a-z A-Z]+$/.test(profileBody.lastName)) {
-      return res.status(400).json({ type: "bad", message: "lastName must contain only letters from A-Z and a-z" });
+      return res
+        .status(400)
+        .json({
+          type: "bad",
+          message: "lastName must contain only letters from A-Z and a-z",
+        });
     }
     if (!isValidEmail(profileBody.email)) {
-      return res.status(400).json({ type: "bad", message: "Email must be valid and contain '@'" });
+      return res
+        .status(400)
+        .json({ type: "bad", message: "Email must be valid and contain '@'" });
     }
     // if (!/^[a-z A-Z 0-9 ,]+$/.test(profileBody.address1)) {
     //   return res.status(400).json({ type: "bad", message: "Address1 must contain only letters and numbers." });
@@ -27,10 +53,20 @@ const createBusinessProfile = async (req, res) => {
     //   return res.status(400).json({ type: "bad", message: "Address2 must contain only letters from A-Z and a-z" });
     // }
     if (!/^[a-z A-Z]+$/.test(profileBody.city)) {
-      return res.status(400).json({ type: "bad", message: "City must contain only letters from A-Z and a-z" });
+      return res
+        .status(400)
+        .json({
+          type: "bad",
+          message: "City must contain only letters from A-Z and a-z",
+        });
     }
     if (!/^[a-z A-Z]+$/.test(profileBody.companyName)) {
-      return res.status(400).json({ type: "bad", message: "CompanyName must contain only letters from A-Z and a-z" });
+      return res
+        .status(400)
+        .json({
+          type: "bad",
+          message: "CompanyName must contain only letters from A-Z and a-z",
+        });
     }
     // if (!/^[a-z A-Z ]+$/.test(profileBody.this.state)) {
     //   return res.status(400).json({ type: "bad", message: "State must contain only letters from A-Z and a-z" });
@@ -129,7 +165,12 @@ const deleteBusinessProfile = async (req, res) => {
         .send({ message: "Record not found for deletion." });
     }
 
-    return res.status(200).json({ message: "Successfully deleted record of the BusinessProfile", recordId });
+    return res
+      .status(200)
+      .json({
+        message: "Successfully deleted record of the BusinessProfile",
+        recordId,
+      });
     // console.log("Deleted Record", deletedRecord);
   } catch (error) {
     res.status(500).send({
@@ -144,24 +185,43 @@ const updateBusinessProfile = async (req, res) => {
   try {
     const recordId = req.params.id;
     const updateData = req.body;
-    const requiredFields = ['firstName', 'lastName',  'email'];
+    const requiredFields = ["firstName", "lastName", "email"];
 
     for (const field of requiredFields) {
       if (!updateData[field]) {
-        return res.status(400).json({ type: "bad", message: `${field.charAt(0).toUpperCase() + field.slice(1)} is required` });
+        return res
+          .status(400)
+          .json({
+            type: "bad",
+            message: `${
+              field.charAt(0).toUpperCase() + field.slice(1)
+            } is required`,
+          });
       }
     }
 
     if (!/^[a-z A-Z]+$/.test(updateData.firstName)) {
-      return res.status(400).json({ type: "bad", message: "First name must contain only letters from A-Z and a-z" });
+      return res
+        .status(400)
+        .json({
+          type: "bad",
+          message: "First name must contain only letters from A-Z and a-z",
+        });
     }
     if (!/^[a-z A-Z]+$/.test(updateData.lastName)) {
-      return res.status(400).json({ type: "bad", message: "Last name must contain only letters from A-Z and a-z" });
+      return res
+        .status(400)
+        .json({
+          type: "bad",
+          message: "Last name must contain only letters from A-Z and a-z",
+        });
     }
     if (!isValidEmail(updateData.email)) {
-      return res.status(400).json({ type: "bad", message: "Email must be valid and contain '@'" });
+      return res
+        .status(400)
+        .json({ type: "bad", message: "Email must be valid and contain '@'" });
     }
-    
+
     // if (!/^[a-z A-Z 0-9 ,]+$/.test(updateData.address1)) {
     //   return res.status(400).json({ type: "bad", message: "Address1 must contain only letters from A-Z and a-z" });
     // }
@@ -169,10 +229,20 @@ const updateBusinessProfile = async (req, res) => {
     //   return res.status(400).json({ type: "bad", message: "Address2 must contain only letters from A-Z and a-z" });
     // }
     if (!/^[a-z A-Z]+$/.test(updateData.city)) {
-      return res.status(400).json({ type: "bad", message: "City must contain only letters from A-Z and a-z" });
+      return res
+        .status(400)
+        .json({
+          type: "bad",
+          message: "City must contain only letters from A-Z and a-z",
+        });
     }
     if (!/^[a-z A-Z]+$/.test(updateData.companyName)) {
-      return res.status(400).json({ type: "bad", message: "CompanyName must contain only letters from A-Z and a-z" });
+      return res
+        .status(400)
+        .json({
+          type: "bad",
+          message: "CompanyName must contain only letters from A-Z and a-z",
+        });
     }
 
     const updatedRecord = await BusinessProfile.findByIdAndUpdate(
@@ -188,7 +258,9 @@ const updateBusinessProfile = async (req, res) => {
     res.status(200).send(updatedRecord);
   } catch (error) {
     res.status(500).send({
-      message: error.message || "Some error occurred while updating the business profile."
+      message:
+        error.message ||
+        "Some error occurred while updating the business profile.",
     });
   }
 };

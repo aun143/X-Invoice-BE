@@ -1,11 +1,15 @@
 const mongoose = require("mongoose");
 
 const ClientSchema = new mongoose.Schema({
-
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     required: true,
+  },
+  userRole: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    required: false,
   },
   clientType: {
     type: String,
@@ -15,24 +19,28 @@ const ClientSchema = new mongoose.Schema({
   organizationName: {
     type: String,
     required: false,
-  },firstName: {
+  },
+  firstName: {
     type: String,
     required: true,
   },
   lastName: {
     type: String,
     required: true,
-  }, language: {
+  },
+  language: {
     type: String,
     required: true,
   },
   email: {
     type: String,
     required: true,
-  },file: {
+  },
+  file: {
     type: String,
     required: false,
-  },url: {
+  },
+  url: {
     type: String,
     required: false,
   },
@@ -40,10 +48,10 @@ const ClientSchema = new mongoose.Schema({
     type: Number,
     required: false,
   },
-   faxNumber: {
+  faxNumber: {
     type: Number,
     required: false,
-  }, 
+  },
   taxId: {
     type: Number,
     required: false,
@@ -51,14 +59,16 @@ const ClientSchema = new mongoose.Schema({
   address1: {
     type: String,
     required: false,
-  }, notes: {
+  },
+  notes: {
     type: String,
     required: false,
   },
   address2: {
     type: String,
     required: false,
-  }, websiteURL: {
+  },
+  websiteURL: {
     type: String,
     required: false,
   },
