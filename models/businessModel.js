@@ -20,10 +20,12 @@ const BusinessProfileSchema = new mongoose.Schema({
   phone: {
     type: Number,
     required: false,
-  },file: {
+  },
+  file: {
     type: String,
     required: false,
-  },url: {
+  },
+  url: {
     type: String,
     required: false,
   },
@@ -82,7 +84,7 @@ const BusinessProfileSchema = new mongoose.Schema({
   profileType: {
     default: null,
     type: String,
-  }
+  },
 });
 
 const BusinessProfile = mongoose.model(

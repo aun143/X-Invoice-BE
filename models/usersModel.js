@@ -5,6 +5,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  userRole:
+  {
+    type: String,
+    // default: 'Admin',
+    enum: ['Admin', 'superAdmin','iSuperAdmin'],
+    required: false,
+  },
   password: {
     type: String,
     required: true,
@@ -28,6 +35,35 @@ const userSchema = new mongoose.Schema({
     ref: "BusinessProfile",
     required: false,
     default: null,
+  },
+  subscription: {
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  planeName: {
+    type: String,
+    enum: ["Basic", "Standard", "Premium"],
+    // default: "Basic",
+    required: true,
+  },
+  maxInvoices: {
+    type: Number,
+    default: 3,
+    required: true,
+
+  },
+  maxClients: {
+    type: Number,
+    default: 3,
+    required: true,
+
+  },
+  price: {
+    type: Number,
+    default: 0,
+    required: true,
   },
 });
 

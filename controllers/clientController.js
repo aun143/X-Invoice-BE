@@ -1,35 +1,39 @@
 const { ClientDetail } = require("../models/clientModel");
+const { userModel } = require("../models/usersModel");
+
 
 const createClient = async (req, res) => {
   try {
     const userId = req.user._id;
-
+    const user = req.user;
+    const maxClientsAllowed = user.subscription.isActive ? user.maxClients : 3;
+    
+    const userClientsCount = await ClientDetail.countDocuments({ user: user._id });
+    if (userClientsCount >= maxClientsAllowed) {
+      return res.status(400).json({ message: "Maximum clients limit reached for the user" });
+    }
     req.body.user = userId;
 
-    if (!/^[a-z A-Z]+$/.test(req.body.firstName)) {
+    if (!/^[a-zA-Z]+$/.test(req.body.firstName)) {
       return res.status(400).json({ type: "bad", message: "First name must contain only letters from A-Z and a-z" });
     }
-    if (!/^[a-z A-Z]+$/.test(req.body.lastName)) {
+    if (!/^[a-zA-Z]+$/.test(req.body.lastName)) {
       return res.status(400).json({ type: "bad", message: "Last name must contain only letters from A-Z and a-z" });
     }
     if (!isValidEmail(req.body.email)) {
       return res.status(400).json({ type: "bad", message: "Email must be valid and contain '@'" });
     }
-    // if (!/^[a-z A-Z 0-9 ,]+$/.test(req.body.address1)) {
-    //   return res.status(400).json({ type: "bad", message: "Address1 name must contain only letters from A-Z and a-z and 0-9" });
-    // }   
-    // if (!/^[a-z A-Z 0-9]+$/.test(req.body.address2)) {
-    //   return res.status(400).json({ type: "bad", message: "Address2 name must contain only letters from A-Z and a-z and 0-9" });
-    // } 
-    if (!/^[a-z A-Z]+$/.test(req.body.city)) {
+    if (!/^[a-zA-Z]+$/.test(req.body.city)) {
       return res.status(400).json({ type: "bad", message: "City name must contain only letters from A-Z and a-z" });
-    } if (!/^[a-z A-Z]+$/.test(req.body.state)) {
+    }
+    if (!/^[a-zA-Z]+$/.test(req.body.state)) {
       return res.status(400).json({ type: "bad", message: "State name must contain only letters from A-Z and a-z" });
     }
     const clientType = req.body.clientType;
     if (!clientType || !["individual", "organization"].includes(clientType)) {
       return res.status(400).send({ message: "Invalid client type provided." });
     }
+
     const newRecord = await ClientDetail.create(req.body);
 
     res.status(200).send(newRecord);
@@ -39,6 +43,63 @@ const createClient = async (req, res) => {
     });
   }
 };
+
+// const createClient = async (req, res) => {
+//   try {
+//     const userId = req.user._id;
+
+//     // Fetch the user document and populate the userRole field
+//     const user = await userModel.findById(userId).populate("userRole");
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found." });
+//     }
+
+//     const userRole = user.userRole.role; // Access the role property from the populated userRole
+
+//     req.body.user = userId;
+
+//     console.log("userRole", userRole);
+//     // Your validation code goes here...
+
+//     let maxClientLimit;
+//     if (userRole === "admin") {
+//       maxClientLimit = 3;
+//     } else if (userRole === "superadmin") {
+//       maxClientLimit = 10;
+//     } else {
+//       return res
+//         .status(403)
+//         .json({
+//           message:
+//             "Only admin or superadmin users are allowed to create clients.",
+//         });
+//     }
+
+//     // Check if the user has already reached the maximum limit
+//     const userClientsCount = await ClientDetail.countDocuments({
+//       user: userId,
+//     });
+//     if (userClientsCount >= maxClientLimit) {
+//       return res
+//         .status(400)
+//         .json({
+//           type: "bad",
+//           message: `You have reached the maximum limit of ${maxClientLimit} clients.`,
+//         });
+//     }
+
+//     // Create the client record
+//     const newRecord = await ClientDetail.create(req.body);
+
+//     // Return the response with createdByUserRole included
+//     res.status(200).send({ newRecord, createdByUserRole: userRole });
+//   } catch (error) {
+//     res.status(500).send({
+//       message:
+//         error.message || "Some error occurred while creating the client.",
+//     });
+//   }
+// };
 
 function isValidEmail(email) {
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -56,9 +117,7 @@ const getAllClient = async (req, res) => {
     });
   } catch (error) {
     res.status(500).send({
-      message:
-        error.message ||
-        "Some error occurred while retrieving clients.",
+      message: error.message || "Some error occurred while retrieving clients.",
     });
   }
 };
@@ -122,8 +181,10 @@ const deleteClient = async (req, res) => {
         .send({ message: "Record not found for deletion." });
     }
 
-    return res.status(200).json({ message: "Successfully deleted record of the ClientDetail",recordId });
-    //console.log("Deleted Record", deletedRecord);
+    return res.status(200).json({
+      message: "Successfully deleted record of the ClientDetail",
+      recordId,
+    });
   } catch (error) {
     res.status(500).send({
       message:
@@ -136,28 +197,42 @@ const deleteClient = async (req, res) => {
 const updateClient = async (req, res) => {
   try {
     if (!req.body.firstName || !/^[a-z A-Z]+$/.test(req.body.firstName)) {
-      return res.status(400).json({ type: "bad", message: "firstName must contain only letters from A-Z and a-z" });
+      return res.status(400).json({
+        type: "bad",
+        message: "firstName must contain only letters from A-Z and a-z",
+      });
     }
 
     if (!req.body.lastName || !/^[a-z A-Z]+$/.test(req.body.lastName)) {
-      return res.status(400).json({ type: "bad", message: "lastName must contain only letters from A-Z and a-z" });
+      return res.status(400).json({
+        type: "bad",
+        message: "lastName must contain only letters from A-Z and a-z",
+      });
     }
 
     if (!isValidEmail(req.body.email)) {
-      return res.status(400).json({ type: "bad", message: "Email must be valid and contain '@'" });
+      return res
+        .status(400)
+        .json({ type: "bad", message: "Email must be valid and contain '@'" });
     }
-    
+
     // if (!/^[a-z A-Z 0-9 ,]+$/.test(req.body.address1)) {
     //   return res.status(400).json({ type: "bad", message: "Address1 name must contain only letters from A-Z and a-z" });
-    // }   
+    // }
     // if (!/^[a-z A-Z 0-9]+$/.test(req.body.address2)) {
     //   return res.status(400).json({ type: "bad", message: "Address2 name must contain only letters from A-Z and a-z" });
-    // } 
+    // }
     if (!/^[a-z A-Z]+$/.test(req.body.city)) {
-      return res.status(400).json({ type: "bad", message: "City name must contain only letters from A-Z and a-z" });
+      return res.status(400).json({
+        type: "bad",
+        message: "City name must contain only letters from A-Z and a-z",
+      });
     }
-     if (!/^[a-z A-Z]+$/.test(req.body.state)) {
-      return res.status(400).json({ type: "bad", message: "State name must contain only letters from A-Z and a-z" });
+    if (!/^[a-z A-Z]+$/.test(req.body.state)) {
+      return res.status(400).json({
+        type: "bad",
+        message: "State name must contain only letters from A-Z and a-z",
+      });
     }
     // if (!req.body.organizationName || !/^[a-z A-Z]+$/.test(req.body.organizationName)) {
     //   return res.status(400).json({ type: "bad", message: "OrganizationName must contain only letters from A-Z and a-z" });
