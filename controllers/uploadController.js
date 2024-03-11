@@ -23,7 +23,6 @@ const imageHandler = async (req, res) => {
     await runMiddleware(req, res, myUploadMiddleware);
     if (req.file.size > maxSize * 1024 * 1024) {
       return res.status(400).json({ error: "File size exceeds the allowed limit" });
-
     }
     if (!allowedMimeTypes.includes(req.file.mimetype)) {
       return res.status(400).json({ error: "Invalid file type. Only JPG, PNG, and PDF are allowed." });
@@ -31,7 +30,8 @@ const imageHandler = async (req, res) => {
     const b64 = Buffer.from(req.file.buffer).toString("base64");
     let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
 
-    const cldRes = await handleUpload(dataURI);
+    const folderName = 'Image'; // Specify the folder name in Cloudinary
+    const cldRes = await handleUpload(dataURI, { folderName }); // Pass the folder option to handleUpload
 
     if (!cldRes || !cldRes.secure_url) {
       throw new Error("Image upload to Cloudinary failed");
