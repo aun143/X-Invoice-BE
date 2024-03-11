@@ -13,11 +13,11 @@ const {
 const { protectRoutes } = require("../middleware/authMiddleware");
 
 router.post("/create", createUser);
-router.post("/subscription", updateSubscription);
+router.put("/subscription", updateSubscription);
+router.post("/loginUser", LoginUser);
 
 router.use(protectRoutes);
 router.get("/me", getProfile);
-router.post("/loginUser", LoginUser);
 router.get("/getUser", getAllUser);
 router.post("/forgotpassword", forgotPassword);
 router.delete("/deleteUser/:id", deleteUser);

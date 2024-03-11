@@ -41,6 +41,14 @@ const userSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
     },
+    startDate: {
+      type: Date,
+      default: null,
+    },
+    endDate: {
+      type: Date,
+      default: null,
+    },
   },
   planeName: {
     type: String,

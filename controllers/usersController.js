@@ -84,14 +84,43 @@ const updateSubscription = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-    user.subscription.isActive = true;
-    user.planeName = planeName || "Basic";
-    user.maxInvoices = maxInvoice || 3;
-    user.maxClients = maxClient || 3;
-    user.price = price;
-    user.userRole = "Admin" || "superAdmin" || "iSuperAdmin";
-    if (planeName || maxInvoice || maxClient || price) {
+
+    if (planeName === 'Premium') {
+      user.planeName = planeName;
+      user.maxInvoices  = -1; 
+      user.maxClients  = -1; 
+      user.price = 300;
       user.subscription.isActive = true;
+      user.userRole = "iSuperAdmin";
+      user.subscription.startDate = new Date();
+      user.subscription.endDate = new Date(user.subscription.startDate);
+      user.subscription.endDate.setMonth(
+        user.subscription.endDate.getMonth() + 12
+      );
+    } else if (planeName === 'Standard') {
+      user.planeName = planeName;
+      user.maxInvoices = 100;
+      user.maxClients = 100;
+      user.price = 100;
+      user.subscription.isActive = true;
+      user.userRole = "superAdmin";
+      user.subscription.startDate = new Date();
+      user.subscription.endDate = new Date(user.subscription.startDate);
+      user.subscription.endDate.setMonth(
+        user.subscription.endDate.getMonth() + 3
+      ); 
+    } else {
+      user.planeName = planeName || "Basic";
+      user.maxInvoices = Math.min(maxInvoice || 3);
+      user.maxClients = Math.min(maxClient || 3);
+      user.price = 0;
+      user.subscription.isActive = false;
+      user.userRole = "Admin";
+      user.subscription.startDate = new Date();
+      user.subscription.endDate = new Date(user.subscription.startDate);
+      user.subscription.endDate.setFullYear(
+        user.subscription.endDate.getFullYear() + 1
+      );
     }
 
     user = await user.save();
@@ -105,65 +134,67 @@ const updateSubscription = async (req, res) => {
   }
 };
 
-const LoginUser = async (req, res) => {
-  try {
-    const reqData = req.body;
-    if (
-      !reqData ||
-      !reqData.password ||
-      reqData.password.length < 8 ||
-      !/^[a-zA-Z0-9!@#$%^&*]+$/.test(reqData.password)
-    ) {
-      return res.status(400).json({
-        type: "bad",
-        message:
-          "Password must be at least 8 characters long and contain only letters from A-Z and a-z, digits from 0-9, and special characters",
-      });
-    }
 
-    if (!isValidEmail(reqData.email)) {
-      return res
-        .status(400)
-        .json({ type: "bad", message: "Email must be valid and contain '@' " });
-    }
-    const user = await userModel.findOne({ email: reqData.email });
 
-    if (!user) {
-      return res.status(404).json({ type: "bad", message: `Invalid email ` });
-    }
+// const LoginUser = async (req, res) => {
+//   try {
+//     const reqData = req.body;
+//     if (
+//       !reqData ||
+//       !reqData.password ||
+//       reqData.password.length < 8 ||
+//       !/^[a-zA-Z0-9!@#$%^&*]+$/.test(reqData.password)
+//     ) {
+//       return res.status(400).json({
+//         type: "bad",
+//         message:
+//           "Password must be at least 8 characters long and contain only letters from A-Z and a-z, digits from 0-9, and special characters",
+//       });
+//     }
 
-    const isPasswordValid = await comparePassword(
-      reqData.password,
-      user.password
-    );
+//     if (!isValidEmail(reqData.email)) {
+//       return res
+//         .status(400)
+//         .json({ type: "bad", message: "Email must be valid and contain '@' " });
+//     }
+//     const user = await userModel.findOne({ email: reqData.email });
 
-    if (!isPasswordValid) {
-      return res
-        .status(404)
-        .json({ type: "bad", message: `Invalid  password!` });
-    }
+//     if (!user) {
+//       return res.status(404).json({ type: "bad", message: `Invalid email ` });
+//     }
 
-    // Check if the user has an active subscription
-    console.log("User's subscription status:", user.subscription);
+//     const isPasswordValid = await comparePassword(
+//       reqData.password,
+//       user.password
+//     );
 
-    // Check if the user has an active subscription
-    if (!user.subscription || !user.subscription.isActive) {
-      return res
-        .status(403)
-        .json({ message: "Subscription is not active. Please subscribe." });
-    }
-    const account = JSON.parse(JSON.stringify(user));
-    const token = generarteToken(user);
+//     if (!isPasswordValid) {
+//       return res
+//         .status(404)
+//         .json({ type: "bad", message: `Invalid  password!` });
+//     }
 
-    return res.status(200).json({
-      type: "success",
-      message: `Account Login successful`,
-      data: { ...account, access_token: token },
-    });
-  } catch (error) {
-    throw error;
-  }
-};
+//     // Check if the user has an active subscription
+//     console.log("User's subscription status:", user.subscription);
+
+//     // Check if the user has an active subscription
+//     if (!user.subscription || !user.subscription.isActive) {
+//       return res
+//         .status(403)
+//         .json({ message: "Subscription is not active. Please subscribe." });
+//     }
+//     const account = JSON.parse(JSON.stringify(user));
+//     const token = generarteToken(user);
+
+//     return res.status(200).json({
+//       type: "success",
+//       message: `Account Login successful`,
+//       data: { ...account, access_token: token },
+//     });
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 // const LoginUser = async (req, res) => {
 //   try {
@@ -218,39 +249,55 @@ const LoginUser = async (req, res) => {
 //   }
 // };
 
-// const LoginUser = async (req, res) => {
-//   try {
-//     const reqData = req.body;
-//     if (!reqData || !reqData.password || reqData.password.length < 8 || !/^[a-zA-Z0-9!@#$%^&*]+$/.test(reqData.password)) {
-//       return res.status(400).json({ type: "bad", message: "Password must be at least 8 characters long and contain only letters from A-Z and a-z, digits from 0-9, and special characters" });
-//     }
+const LoginUser = async (req, res) => {
+  try {
+    const reqData = req.body;
+    if (
+      !reqData ||
+      !reqData.password ||
+      reqData.password.length < 8 ||
+      !/^[a-zA-Z0-9!@#$%^&*]+$/.test(reqData.password)
+    ) {
+      return res.status(400).json({
+        type: "bad",
+        message:
+          "Password must be at least 8 characters long and contain only letters from A-Z and a-z, digits from 0-9, and special characters",
+      });
+    }
 
-//     if (!isValidEmail(reqData.email)) {
-//       return res.status(400).json({ type: "bad", message: "Email must be valid and contain '@' " });
-//     }
-//     const user = await userModel.findOne({ email: reqData.email });
+    if (!isValidEmail(reqData.email)) {
+      return res
+        .status(400)
+        .json({ type: "bad", message: "Email must be valid and contain '@' " });
+    }
+    const user = await userModel.findOne({ email: reqData.email });
 
-//     if (!user) {
-//       return res.status(404).json({ type: "bad", message: `Invalid email ` });
-//     }
+    if (!user) {
+      return res.status(404).json({ type: "bad", message: `Invalid email ` });
+    }
 
-//     const isPasswordValid = await comparePassword(reqData.password, user.password);
+    const isPasswordValid = await comparePassword(
+      reqData.password,
+      user.password
+    );
 
-//     if (!isPasswordValid) {
-//       return res.status(404).json({ type: "bad", message: `Invalid  password!` });
-//     }
-//     const account = JSON.parse(JSON.stringify(user));
-//     const token = generarteToken(user);
+    if (!isPasswordValid) {
+      return res
+        .status(404)
+        .json({ type: "bad", message: `Invalid  password!` });
+    }
+    const account = JSON.parse(JSON.stringify(user));
+    const token = generarteToken(user);
 
-//     return res.status(200).json({
-//       type: "success",
-//       message: `Account Login successful`,
-//       data: { ...account, access_token: token },
-//     });
-//   } catch (error) {
-//     throw error;
-//   }
-// };
+    return res.status(200).json({
+      type: "success",
+      message: `Account Login successful`,
+      data: { ...account, access_token: token },
+    });
+  } catch (error) {
+    throw error;
+  }
+};
 
 function isValidEmail(email) {
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
