@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   {
     type: String,
     // default: 'Admin',
-    enum: ['Admin', 'superAdmin','iSuperAdmin'],
+    enum: ['User','Admin', 'superAdmin','iSuperAdmin'],
     required: false,
   },
   password: {
@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema({
   },
   planeName: {
     type: String,
-    enum: ["Basic", "Standard", "Premium"],
+    enum: ["Free","Basic", "Standard", "Premium"],
     // default: "Basic",
     required: true,
   },

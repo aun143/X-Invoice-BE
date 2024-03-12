@@ -89,7 +89,7 @@ const updateSubscription = async (req, res) => {
       user.planeName = planeName;
       user.maxInvoices  = -1; 
       user.maxClients  = -1; 
-      user.price = 300;
+      user.price = 500;
       user.subscription.isActive = true;
       user.userRole = "iSuperAdmin";
       user.subscription.startDate = new Date();
@@ -107,15 +107,28 @@ const updateSubscription = async (req, res) => {
       user.subscription.startDate = new Date();
       user.subscription.endDate = new Date(user.subscription.startDate);
       user.subscription.endDate.setMonth(
+        user.subscription.endDate.getMonth() + 6
+      ); 
+    }
+    else if (planeName === 'Basic') {
+      user.planeName = planeName;
+      user.maxInvoices = 30;
+      user.maxClients = 30;
+      user.price = 30;
+      user.subscription.isActive = true;
+      user.userRole = "Admin";
+      user.subscription.startDate = new Date();
+      user.subscription.endDate = new Date(user.subscription.startDate);
+      user.subscription.endDate.setMonth(
         user.subscription.endDate.getMonth() + 3
       ); 
     } else {
-      user.planeName = planeName || "Basic";
+      user.planeName = planeName || "Free";
       user.maxInvoices = Math.min(maxInvoice || 3);
       user.maxClients = Math.min(maxClient || 3);
       user.price = 0;
       user.subscription.isActive = false;
-      user.userRole = "Admin";
+      user.userRole = "User";
       user.subscription.startDate = new Date();
       user.subscription.endDate = new Date(user.subscription.startDate);
       user.subscription.endDate.setFullYear(

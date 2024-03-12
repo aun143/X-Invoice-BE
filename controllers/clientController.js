@@ -12,6 +12,9 @@ const createClient = async (req, res) => {
     if (userClientsCount >= maxClientsAllowed) {
       return res.status(400).json({ message: "Maximum clients limit reached for the user" });
     }
+    if (user.subscription.endDate && user.subscription.endDate < new Date()) {
+      return res.status(400).json({ message: "Your subscription plan has expired. Please update your plan." });
+    }
     req.body.user = userId;
 
     if (!/^[a-zA-Z]+$/.test(req.body.firstName)) {

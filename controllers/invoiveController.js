@@ -70,7 +70,9 @@ const createInvoice = async (req, res) => {
     if (userInvoicesCount >= maxInvoicesAllowed) {
       return res.status(400).json({ message: "Maximum invoices limit reached for the user" });
     }
-    
+      if (user.subscription.endDate && user.subscription.endDate < new Date()) {
+      return res.status(400).json({ message: "Your subscription plan has expired. Please update your plan." });
+    }
     req.body.user = user._id;
     const newInvoice = await InvoiceDetail.create(req.body);
     res.status(200).send(newInvoice);
