@@ -54,7 +54,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ["Free","Basic", "Standard", "Premium"],
     // default: "Basic",
-    required: true,
+    required: false,
   },
   maxInvoices: {
     type: Number,

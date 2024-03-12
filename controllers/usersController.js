@@ -30,7 +30,12 @@ const createUser = async (req, res) => {
           "Username must contain only letters from A-Z and a-z no space allow",
       });
     }
-
+    if (reqData.username.length < 3 || reqData.username.length > 20) {
+      return res.status(400).json({
+        type: "bad",
+        message: "Username length must be between 3 and 20 characters",
+      });
+    }
     if (
       reqData.password.length < 8 ||
       !/^[a-zA-Z0-9!@#$%^&*]+$/.test(reqData.password)
@@ -412,7 +417,12 @@ const updateUser = async (req, res) => {
           "Username must contain only letters from A-Z and a-z no space allow",
       });
     }
-
+    if (reqData.username.length < 3 || reqData.username.length > 20) {
+      return res.status(400).json({
+        type: "bad",
+        message: "Username length must be between 3 and 20 characters",
+      });
+    }
     if (
       req.body.password.length < 8 ||
       !/^[a-zA-Z0-9!@#$%^&*]+$/.test(req.body.password)
@@ -429,6 +439,7 @@ const updateUser = async (req, res) => {
         .status(400)
         .json({ type: "bad", message: "Email must be valid and contain '@' " });
     }
+   
     if (req.body.password) {
       req.body.password = await hashPassword(req.body.password);
     }
