@@ -18,7 +18,7 @@ const BusinessProfileSchema = new mongoose.Schema({
     required: true,
   },
   phone: {
-    type: Number,
+    type: String,
     required: false,
   },
   file: {
@@ -69,14 +69,16 @@ const BusinessProfileSchema = new mongoose.Schema({
     type: Number,
     required: false,
   },
-  customFieldName: {
-    type: String,
-    required: false,
-  },
-  customFieldValue: {
-    type: String,
-    required: false,
-  },
+  customFields: [{
+    customFieldName: {
+      type: String,
+      required: false,
+    },
+    customFieldValue: {
+      type: String,
+      required: false,
+    },
+  }],
   postalCode: {
     type: Number,
     required: false,
