@@ -28,11 +28,11 @@ const createClient = async (req, res) => {
         message: "First name must contain only letters from A-Z and a-z",
       });
     }
-    
-    if (req.body.firstName.length < 3 || req.body.firstName.length > 20) {
+
+    if (req.body.firstName.length < 3 || req.body.firstName.length > 10) {
       return res.status(400).json({
         type: "bad",
-        message: "firstName must be between 3 and 20 characters",
+        message: "firstName must be between 3 and 10 characters",
       });
     }
     if (!/^[a-zA-Z]+$/.test(req.body.lastName)) {
@@ -41,10 +41,10 @@ const createClient = async (req, res) => {
         message: "Last name must contain only letters from A-Z and a-z",
       });
     }
-    if (req.body.lastName.length < 3 || req.body.lastName.length > 20) {
+    if (req.body.lastName.length < 3 || req.body.lastName.length > 10) {
       return res.status(400).json({
         type: "bad",
-        message: "lastName must be between 3 and 20 characters",
+        message: "lastName must be between 3 and 10 characters",
       });
     }
     if (!isValidEmail(req.body.email)) {
@@ -58,10 +58,10 @@ const createClient = async (req, res) => {
         message: "City name must contain only letters from A-Z and a-z",
       });
     }
-    if (req.body.city.length < 3 || req.body.city.length > 20) {
+    if (req.body.city.length < 3 || req.body.city.length > 15) {
       return res.status(400).json({
         type: "bad",
-        message: "City must be between 3 and 20 characters",
+        message: "City must be between 3 and 15 characters",
       });
     }
     if (!/^[a-zA-Z]+$/.test(req.body.state)) {
@@ -70,17 +70,21 @@ const createClient = async (req, res) => {
         message: "State name must contain only letters from A-Z and a-z",
       });
     }
-    if (req.body.state.length < 3 || req.body.state.length > 20) {
+  if(req.body.state)
+  {
+    if (req.body.state.length < 3 || req.body.state.length > 10) {
       return res.status(400).json({
         type: "bad",
-        message: "State must be between 3 and 20 characters",
+        message: "State must be between 3 and 10 characters",
       });
     }
+  }
     if (req.body.phone) {
-      if (! /^\+[0-9]+$/.test(req.body.phone)) {
+      if (!/^\+[0-9]+$/.test(req.body.phone)) {
         return res.status(400).json({
           type: "bad",
-          message: "Invalid phone number format. It must start with '+' and contain only digits (0-9)",
+          message:
+            "Invalid phone number format. It must start with '+' and contain only digits (0-9)",
         });
       }
       if (req.body.phone.length !== 13) {
@@ -89,14 +93,9 @@ const createClient = async (req, res) => {
           message: "Phone number must be 13 digits long",
         });
       }
-    }   
-     if (req.body.faxNumber) {
-      if (! /^\+[0-9]+$/.test(req.body.faxNumber)) {
-        return res.status(400).json({
-          type: "bad",
-          message: "Invalid faxNumber  format. It must start with '+' and contain only digits (0-9)",
-        });
-      }
+    }
+    // console.log("phone",phone)
+    if (req.body.faxNumber) {
       if (req.body.faxNumber.length !== 13) {
         return res.status(400).json({
           type: "bad",
@@ -104,7 +103,7 @@ const createClient = async (req, res) => {
         });
       }
     }
-   
+
     const clientType = req.body.clientType;
     if (!clientType || !["individual", "organization"].includes(clientType)) {
       return res.status(400).send({ message: "Invalid client type provided." });
@@ -112,7 +111,10 @@ const createClient = async (req, res) => {
 
     const newRecord = await ClientDetail.create(req.body);
 
-    res.status(200).send(newRecord);
+    res.status(200).send({
+      message: "Client created successfully",
+      data: newRecord,
+    });
   } catch (error) {
     res.status(500).send({
       message:
@@ -190,6 +192,7 @@ const getAllClient = async (req, res) => {
 
     res.status(200).send({
       totalItems: allClient.length,
+      message: "Get All Client successfully",
       data: allClient,
     });
   } catch (error) {
@@ -238,7 +241,10 @@ const getClientById = async (req, res) => {
       });
     }
 
-    res.status(200).json(record);
+    res.status(200).json(
+      // message: "Get Client profile Successfully",
+      record
+    );
   } catch (error) {
     console.error("Error retrieving client profile: ", error);
     res.status(500).json({
@@ -279,10 +285,10 @@ const updateClient = async (req, res) => {
         message: "firstName must contain only letters from A-Z and a-z",
       });
     }
-    if (req.body.firstName.length < 3 || req.body.firstName.length > 20) {
+    if (req.body.firstName.length < 3 || req.body.firstName.length > 10) {
       return res.status(400).json({
         type: "bad",
-        message: "firstName must be between 3 and 20 characters",
+        message: "firstName must be between 3 and 10 characters",
       });
     }
     if (!req.body.lastName || !/^[a-z A-Z]+$/.test(req.body.lastName)) {
@@ -291,10 +297,10 @@ const updateClient = async (req, res) => {
         message: "lastName must contain only letters from A-Z and a-z",
       });
     }
-    if (req.body.lastName.length < 3 || req.body.lastName.length > 20) {
+    if (req.body.lastName.length < 3 || req.body.lastName.length > 10) {
       return res.status(400).json({
         type: "bad",
-        message: "lastName must be between 3 and 20 characters",
+        message: "lastName must be between 3 and 10 characters",
       });
     }
     if (!isValidEmail(req.body.email)) {
@@ -315,10 +321,10 @@ const updateClient = async (req, res) => {
         message: "City name must contain only letters from A-Z and a-z",
       });
     }
-    if (req.body.city.length < 3 || req.body.city.length > 20) {
+    if (req.body.city.length < 3 || req.body.city.length > 15) {
       return res.status(400).json({
         type: "bad",
-        message: "City must be between 3 and 20 characters",
+        message: "City must be between 3 and 15 characters",
       });
     }
     if (!/^[a-z A-Z]+$/.test(req.body.state)) {
@@ -327,17 +333,21 @@ const updateClient = async (req, res) => {
         message: "State name must contain only letters from A-Z and a-z",
       });
     }
-    if (req.body.state.length < 3 || req.body.state.length > 20) {
-      return res.status(400).json({
-        type: "bad",
-        message: "State must be between 3 and 20 characters",
-      });
-    }
+if(req.body.state)
+{
+  if (req.body.state.length < 3 || req.body.state.length > 10) {
+    return res.status(400).json({
+      type: "bad",
+      message: "State must be between 3 and 10 characters",
+    });
+  }
+}
     if (req.body.phone) {
-      if (! /^\+[0-9]+$/.test(req.body.phone)) {
+      if (!/^\+[0-9]+$/.test(req.body.phone)) {
         return res.status(400).json({
           type: "bad",
-          message: "Invalid phone number format. It must start with '+' and contain only digits (0-9)",
+          message:
+            "Invalid phone number format. It must start with '+' and contain only digits (0-9)",
         });
       }
       if (req.body.phone.length !== 13) {
@@ -346,14 +356,8 @@ const updateClient = async (req, res) => {
           message: "Phone number must be 13 digits long",
         });
       }
-    }   
-     if (req.body.faxNumber) {
-      if (! /^\+[0-9]+$/.test(req.body.faxNumber)) {
-        return res.status(400).json({
-          type: "bad",
-          message: "Invalid faxNumber  format. It must start with '+' and contain only digits (0-9)",
-        });
-      }
+    }
+    if (req.body.faxNumber) {
       if (req.body.faxNumber.length !== 13) {
         return res.status(400).json({
           type: "bad",
@@ -378,7 +382,10 @@ const updateClient = async (req, res) => {
       return res.status(404).send({ message: "Record not found for update." });
     }
 
-    res.status(200).send(updatedRecord);
+    res.status(200).send({
+      message: "Client profile updated successfully",
+      updatedData: updatedRecord,
+    });
     //console.log("Updated Record", updatedRecord);
   } catch (error) {
     res.status(500).send({

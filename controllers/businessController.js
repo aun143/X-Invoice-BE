@@ -7,73 +7,63 @@ const createBusinessProfile = async (req, res) => {
     const requiredFields = [
       "firstName",
       "lastName",
-      "address1",
-      "city",
-      "country",
       "email",
+      "address1",
+      "country",
+      "city",
     ];
 
     for (const field of requiredFields) {
       if (!profileBody[field]) {
-        return res
-          .status(400)
-          .json({
-            type: "bad",
-            message: `${
-              field.charAt(0).toUpperCase() + field.slice(1)
-            } is required`,
-          });
+        return res.status(400).json({
+          type: "bad",
+          message: `${
+            field.charAt(0).toUpperCase() + field.slice(1)
+          } is required`,
+        });
       }
     }
     if (!/^[a-z A-Z]+$/.test(profileBody.firstName)) {
-      return res
-        .status(400)
-        .json({
-          type: "bad",
-          message: "firstName must contain only letters from A-Z and a-z",
-        });
+      return res.status(400).json({
+        type: "bad",
+        message: "firstName must contain only letters from A-Z and a-z",
+      });
     }
-    if(profileBody.firstName.length < 3 || profileBody.firstName.length > 20) {
-      return res
-     .status(400)
-     .json({
-          type: "bad",
-          message: "firstName must be between 3 and 20 characters",
-        });
-
+    if (profileBody.firstName.length < 3 || profileBody.firstName.length > 10) {
+      return res.status(400).json({
+        type: "bad",
+        message: "firstName must be between 3 and 10 characters",
+      });
     }
     if (!/^[a-z A-Z]+$/.test(profileBody.lastName)) {
-      return res
-        .status(400)
-        .json({
-          type: "bad",
-          message: "lastName must contain only letters from A-Z and a-z",
-        });
+      return res.status(400).json({
+        type: "bad",
+        message: "lastName must contain only letters from A-Z and a-z",
+      });
     }
-    if(profileBody.lastName.length < 3 || profileBody.lastName.length > 20) {
-      return res
-     .status(400)
-     .json({
-          type: "bad",
-          message: "lastName must be between 3 and 20 characters",
-        });
-
+    if (profileBody.lastName.length < 3 || profileBody.lastName.length > 10) {
+      return res.status(400).json({
+        type: "bad",
+        message: "lastName must be between 3 and 10 characters",
+      });
     }
     if (profileBody.phone) {
-      if (! /^\+[0-9]+$/.test(profileBody.phone)) {
-        return res.status(400).json({
-          type: "bad",
-          message: "Invalid phone number format. It must start with '+' and contain only digits (0-9)",
-        });
+      if (profileBody.phone) {
+        if (!/^\+[0-9]+$/.test(profileBody.phone)) {
+          return res.status(400).json({
+            type: "bad",
+            message:
+              "Invalid phone number format. It must start with '+' and contain only digits (0-9)",
+          });
+        }
+        if (profileBody.phone.length !== 13) {
+          return res.status(400).json({
+            type: "bad",
+            message: "Phone number must be 13 digits long",
+          });
+        }
       }
-      if (profileBody.phone.length !== 13) {
-        return res.status(400).json({
-          type: "bad",
-          message: "Phone number must be 13 digits long",
-        });
-      }
-    } 
-    console.log("profileBody.phone.length",profileBody.phone.length)
+    }
     if (!isValidEmail(profileBody.email)) {
       return res
         .status(400)
@@ -87,21 +77,16 @@ const createBusinessProfile = async (req, res) => {
     //   return res.status(400).json({ type: "bad", message: "Address2 must contain only letters from A-Z and a-z" });
     // }
     if (!/^[a-z A-Z]+$/.test(profileBody.city)) {
-      return res
-        .status(400)
-        .json({
-          type: "bad",
-          message: "City must contain only letters from A-Z and a-z",
-        });
+      return res.status(400).json({
+        type: "bad",
+        message: "City must contain only letters from A-Z and a-z",
+      });
     }
-    if(profileBody.city.length < 3 || profileBody.city.length > 20) {
-      return res
-     .status(400)
-     .json({
-          type: "bad",
-          message: "city must be between 3 and 20 characters",
-        });
-
+    if (profileBody.city.length < 3 || profileBody.city.length > 15) {
+      return res.status(400).json({
+        type: "bad",
+        message: "city must be between 3 and 15 characters",
+      });
     }
     if (profileBody.companyName) {
       if (!/^[a-zA-Z]+$/.test(profileBody.companyName)) {
@@ -110,14 +95,17 @@ const createBusinessProfile = async (req, res) => {
           message: "CompanyName must contain only letters from A-Z and a-z",
         });
       }
-      if (profileBody.companyName.length < 3 || profileBody.companyName.length > 20) {
+      if (
+        profileBody.companyName.length < 3 ||
+        profileBody.companyName.length > 20
+      ) {
         return res.status(400).json({
           type: "bad",
           message: "companyName must be between 3 and 20 characters",
         });
       }
     }
-    
+
     // if (!/^[a-z A-Z ]+$/.test(profileBody.this.state)) {
     //   return res.status(400).json({ type: "bad", message: "State must contain only letters from A-Z and a-z" });
     // }
@@ -149,7 +137,10 @@ const createBusinessProfile = async (req, res) => {
         .populate("organizationProfile")
         .exec();
 
-      return res.status(200).send(populatedUser);
+      return res.status(200).send({
+        message: "Created Business Profile successfully",
+        createProfile: populatedUser,
+      });
     } else {
       return res.status(404).json({
         message:
@@ -174,7 +165,10 @@ const getAllBusinessProfile = async (req, res) => {
   try {
     const records = await BusinessProfile.find();
 
-    res.status(200).send(records);
+    res.status(200).send({
+      message: "Get All Business profile successfully",
+      getAllProfiles: records,
+    });
     // console.log("Get All BusinessProfiles", records);
   } catch (error) {
     res.status(500).send({
@@ -195,7 +189,10 @@ const getBusinessProfileById = async (req, res) => {
       });
     }
 
-    res.status(200).json(record);
+    res.status(200).json({
+      message: "Get Business profile Successfully",
+      getRecord: record,
+    });
   } catch (error) {
     console.error("Error retrieving business profile: ", error);
     res.status(500).json({
@@ -215,12 +212,10 @@ const deleteBusinessProfile = async (req, res) => {
         .send({ message: "Record not found for deletion." });
     }
 
-    return res
-      .status(200)
-      .json({
-        message: "Successfully deleted record of the BusinessProfile",
-        recordId,
-      });
+    return res.status(200).json({
+      message: "Successfully deleted record of the BusinessProfile",
+      recordId,
+    });
     // console.log("Deleted Record", deletedRecord);
   } catch (error) {
     res.status(500).send({
@@ -239,50 +234,38 @@ const updateBusinessProfile = async (req, res) => {
 
     for (const field of requiredFields) {
       if (!updateData[field]) {
-        return res
-          .status(400)
-          .json({
-            type: "bad",
-            message: `${
-              field.charAt(0).toUpperCase() + field.slice(1)
-            } is required`,
-          });
+        return res.status(400).json({
+          type: "bad",
+          message: `${
+            field.charAt(0).toUpperCase() + field.slice(1)
+          } is required`,
+        });
       }
     }
 
     if (!/^[a-z A-Z]+$/.test(updateData.firstName)) {
-      return res
-        .status(400)
-        .json({
-          type: "bad",
-          message: "First name must contain only letters from A-Z and a-z",
-        });
+      return res.status(400).json({
+        type: "bad",
+        message: "First name must contain only letters from A-Z and a-z",
+      });
     }
-    if(updateData.firstName.length < 3 || updateData.firstName.length > 20) {
-      return res
-     .status(400)
-     .json({
-          type: "bad",
-          message: "firstName must be between 3 and 20 characters",
-        });
-
+    if (updateData.firstName.length < 3 || updateData.firstName.length > 10) {
+      return res.status(400).json({
+        type: "bad",
+        message: "firstName must be between 3 and 10 characters",
+      });
     }
     if (!/^[a-z A-Z]+$/.test(updateData.lastName)) {
-      return res
-        .status(400)
-        .json({
-          type: "bad",
-          message: "Last name must contain only letters from A-Z and a-z",
-        });
+      return res.status(400).json({
+        type: "bad",
+        message: "Last name must contain only letters from A-Z and a-z",
+      });
     }
-    if(updateData.lastName.length < 3 || updateData.lastName.length > 20) {
-      return res
-     .status(400)
-     .json({
-          type: "bad",
-          message: "lastName must be between 3 and 20 characters",
-        });
-
+    if (updateData.lastName.length < 3 || updateData.lastName.length > 10) {
+      return res.status(400).json({
+        type: "bad",
+        message: "lastName must be between 3 and 10 characters",
+      });
     }
     if (!isValidEmail(updateData.email)) {
       return res
@@ -297,45 +280,40 @@ const updateBusinessProfile = async (req, res) => {
     //   return res.status(400).json({ type: "bad", message: "Address2 must contain only letters from A-Z and a-z" });
     // }
     if (!/^[a-z A-Z]+$/.test(updateData.city)) {
-      return res
-        .status(400)
-        .json({
-          type: "bad",
-          message: "City must contain only letters from A-Z and a-z",
-        });
+      return res.status(400).json({
+        type: "bad",
+        message: "City must contain only letters from A-Z and a-z",
+      });
     }
-    if(updateData.city.length < 3 || updateData.city.length > 20) {
-      return res
-     .status(400)
-     .json({
-          type: "bad",
-          message: "City must be between 3 and 20 characters",
-        });
-
+    if (updateData.city.length < 3 || updateData.city.length > 15) {
+      return res.status(400).json({
+        type: "bad",
+        message: "City must be between 3 and 15 characters",
+      });
     }
-    if (updateData.companyName){
+    if (updateData.companyName) {
       if (!/^[a-z A-Z]+$/.test(updateData.companyName)) {
-        return res
-          .status(400)
-          .json({
-            type: "bad",
-            message: "CompanyName must contain only letters from A-Z and a-z",
-          });
+        return res.status(400).json({
+          type: "bad",
+          message: "CompanyName must contain only letters from A-Z and a-z",
+        });
       }
-      if(updateData.companyName.length < 3 || updateData.companyName.length > 20) {
-        return res
-       .status(400)
-       .json({
-            type: "bad",
-            message: "companyName must be between 3 and 20 characters",
-          });
+      if (
+        updateData.companyName.length < 3 ||
+        updateData.companyName.length > 20
+      ) {
+        return res.status(400).json({
+          type: "bad",
+          message: "companyName must be between 3 and 20 characters",
+        });
       }
     }
     if (updateData.phone) {
-      if (! /^\+[0-9]+$/.test(updateData.phone)) {
+      if (!/^\+[0-9]+$/.test(updateData.phone)) {
         return res.status(400).json({
           type: "bad",
-          message: "Invalid phone number format. It must start with '+' and contain only digits (0-9)",
+          message:
+            "Invalid phone number format. It must start with '+' and contain only digits (0-9)",
         });
       }
       if (updateData.phone.length !== 13) {
@@ -344,7 +322,7 @@ const updateBusinessProfile = async (req, res) => {
           message: "Phone number must be 13 digits long",
         });
       }
-    } 
+    }
     const updatedRecord = await BusinessProfile.findByIdAndUpdate(
       recordId,
       updateData,
@@ -355,7 +333,10 @@ const updateBusinessProfile = async (req, res) => {
       return res.status(404).send({ message: "Record not found for update." });
     }
 
-    res.status(200).send(updatedRecord);
+    res.status(200).send({
+      message: "Business profile updated successfully",
+      updatedData: updatedRecord,
+    });
   } catch (error) {
     res.status(500).send({
       message:

@@ -1,17 +1,19 @@
-
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const { ClientDetail } = require("../models/clientModel");
 const { BusinessProfile } = require("../models/businessModel");
 const { InvoiceDetail } = require("../models/invoiceModel");
-var html_to_pdf = require('html-pdf-node');
-const handlebars = require('handlebars');
-const fs = require('fs');
-const helpers = require('handlebars-helpers')();
+var html_to_pdf = require("html-pdf-node");
+const handlebars = require("handlebars");
+const fs = require("fs");
+const helpers = require("handlebars-helpers")();
 
 // Register the eq helper
 handlebars.registerHelper(helpers);
-
+handlebars.registerHelper("formatDate", function (date) {
+  const formattedDate = new Date(date).toLocaleDateString();
+  return formattedDate;
+});
 
 const path = require("path");
 const axios = require("axios");
@@ -23,7 +25,9 @@ const fetchData = async (
 ) => {
   try {
     const clientData = await ClientDetail.findById(profileIdClient).lean();
-    const businessData = await BusinessProfile.findById(profileIdBusiness).lean();
+    const businessData = await BusinessProfile.findById(
+      profileIdBusiness
+    ).lean();
     const invoiceData = await InvoiceDetail.findById(invoiceId).lean();
     return { clientData, businessData, invoiceData };
   } catch (error) {
@@ -31,16 +35,13 @@ const fetchData = async (
   }
 };
 
-
 const generatePDF = async (req, res) => {
   try {
     const clientIdToGeneratePDF = req.query.clientId;
     const businessIdToGeneratePDF = req.query.businessId;
     const invoiceIdToGeneratePDF = req.query.invoiceId;
 
-
     const generatedLink = `?clientId=${clientIdToGeneratePDF}&businessId=${businessIdToGeneratePDF}&invoiceId=${invoiceIdToGeneratePDF}`;
-
 
     if (
       !clientIdToGeneratePDF ||
@@ -54,59 +55,43 @@ const generatePDF = async (req, res) => {
         );
     }
 
-
     const { clientData, businessData, invoiceData } = await fetchData(
       { _id: clientIdToGeneratePDF },
       { _id: businessIdToGeneratePDF },
       { _id: invoiceIdToGeneratePDF }
     );
-const date = new Date(invoiceData.date).toLocaleDateString();
-    const invoiceDueDate = new Date(invoiceData.invoiceDueDate).toLocaleDateString();
+    const date = new Date(invoiceData.date).toLocaleDateString();
+    const invoiceDueDate = new Date(
+      invoiceData.invoiceDueDate
+    ).toLocaleDateString();
 
     // Compile the template with the data
-    const template = fs.readFileSync('./views/pdfTemplate.hbs', 'utf8');
+    const template = fs.readFileSync("./views/pdfTemplate.hbs", "utf8");
     const compiledTemplate = handlebars.compile(template, { noEscape: true });
     const html = compiledTemplate({ clientData, businessData, invoiceData });
 
     // Generate PDF
-    html_to_pdf.generatePdf({ content: html }, { format: 'A4' })
-        .then(pdfBuffer => {
-            res.set({
-                'Content-Type': 'application/pdf',
-                'Content-Length': pdfBuffer.length
-            });
-            res.send(pdfBuffer);
-        })
-        .catch(error => {
-            console.error('PDF generation error:', error);
-            res.status(500).send({ error: 'Unable to generate PDF' });
+    html_to_pdf
+      .generatePdf({ content: html }, { format: "A4" })
+      .then((pdfBuffer) => {
+        res.set({
+          "Content-Type": "application/pdf",
+          "Content-Length": pdfBuffer.length,
         });
+        res.send(pdfBuffer);
+      })
+      .catch((error) => {
+        console.error("PDF generation error:", error);
+        res.status(500).send({ error: "Unable to generate PDF" });
+      });
   } catch (error) {
-    console.error('PDF Generate', error);
+    console.error("PDF Generate", error);
     res.status(500).send("Internal Server Error");
   }
 };
 module.exports = {
   generatePDF,
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
-
 
 // const mongoose = require('mongoose');
 // const ObjectId = mongoose.Types.ObjectId;
@@ -175,19 +160,19 @@ module.exports = {
 //       display: flex;
 //       flex-direction: row;
 //       max-width:100%;
-//       margin-bottom: 2px;  
+//       margin-bottom: 2px;
 //     }
 
 //       .section {
 //         display: flex;
-       
+
 //         flex-direction: row;
 //       }
 //       .section-left,
 //       .section-right {
 //         width: 50%;
 //       }
-   
+
 //       .section-right {
 //         text-align: left;
 //       }
@@ -196,7 +181,7 @@ module.exports = {
 //         display: flex;
 //         flex-direction: column;
 //       }
-   
+
 //       th,
 //       td {
 //         border: 1px solid #dddddd;
@@ -255,14 +240,11 @@ module.exports = {
 //           <p>${businessData.city}</p>
 //           <p>${businessData.country}</p>
 //           <p>${businessData.postalCode}</p>
-       
+
 //         </div>
 //         <div class="section-right">
 //           <p><strong>Invoice No: </strong>${invoiceData.invoiceNumber} <span id="invoiceNumber"></span></p>
 //           <p><strong>Date: </strong> ${date}<span id="date"></span></p>
-
-
-
 
 //         </div>
 //       </div>
@@ -276,7 +258,7 @@ module.exports = {
 //           <p>${clientData.city}</p>
 //           <p>${clientData.country}</p>
 //           <p>${clientData.postalCode}</p>
-     
+
 //           <br/>
 //           <br/>
 //         </div>
@@ -304,7 +286,7 @@ module.exports = {
 //         ${invoiceData.items.map(item => `<p>${item.amount}</p>`).join('')}
 //       </div>
 //     </div>
-   
+
 //     <p id="itemsContainer"></p>
 //     <hr />
 //     <br />
@@ -320,8 +302,7 @@ module.exports = {
 //             </strong>
 //           </p>
 //         </div>
-       
-       
+
 //         <br/>
 //         <br/>
 //         <div style="text-align: right">
@@ -357,7 +338,7 @@ module.exports = {
 //   </body>
 //   </html>
 //    ` };
-    
+
 //     // const file = {
 //     //   content: `
 //     //     <html>
@@ -403,13 +384,13 @@ module.exports = {
 //           }
 
 //           // Sending the PDF URL in the response
-//           res.status(200).json({ 
+//           res.status(200).json({
 //             public_id: public_id,
 //             storageMessage: "Successfully invoice stored as a PDF in Cloudinary",
 //             updateMessage: "updatedInvoice is successfully with Pdf Url",
-//             pdfUrl: result.secure_url 
+//             pdfUrl: result.secure_url
 //         });
-        
+
 //         } catch (updateError) {
 //           console.error("Error updating Invoice with pdfUrl:", updateError);
 //           res.status(500).json({ error: "Failed to update Invoice with pdfUrl" });
@@ -427,10 +408,8 @@ module.exports = {
 //   generatePDF,
 // };
 
-
-
 //   // <p>${businessData.lastName}</p>
-//               // <p>${businessData.firstName}</p> 
+//               // <p>${businessData.firstName}</p>
 //               // <p>${businessData.address1}</p>
 //               // <p>${businessData.city}</p>
 //               // <p>${businessData.country}</p>
