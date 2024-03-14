@@ -48,7 +48,7 @@ const validStatusValues = ["Pending", "Paid", "Unpaid"];
 //   try {
 //     const user = req.user._id;
 //     req.body.user = user;
-    
+
 //     const newinvoice = await InvoiceDetail.create(req.body);
 //     res.status(200).send(newinvoice);
 //     //console.log("Newinvoice", newinvoice);
@@ -60,29 +60,42 @@ const validStatusValues = ["Pending", "Paid", "Unpaid"];
 //   }
 // };
 
-
 const createInvoice = async (req, res) => {
   try {
     const user = req.user;
-    const maxInvoicesAllowed = user.subscription.isActive ? user.maxInvoices : 3;
-    
-    const userInvoicesCount = await InvoiceDetail.countDocuments({ user: user._id });
+    const maxInvoicesAllowed = user.subscription.isActive
+      ? user.maxInvoices
+      : 3;
+
+    const userInvoicesCount = await InvoiceDetail.countDocuments({
+      user: user._id,
+    });
     if (userInvoicesCount >= maxInvoicesAllowed) {
-      return res.status(400).json({ message: "Maximum invoices limit reached for the user" });
+      return res
+        .status(400)
+        .json({ message: "Maximum invoices limit reached for the user" });
     }
-      if (user.subscription.endDate && user.subscription.endDate < new Date()) {
-      return res.status(400).json({ message: "Your subscription plan has expired. Please update your plan." });
+    if (user.subscription.endDate && user.subscription.endDate < new Date()) {
+      return res
+        .status(400)
+        .json({
+          message:
+            "Your subscription plan has expired. Please update your plan.",
+        });
     }
     req.body.user = user._id;
     const newInvoice = await InvoiceDetail.create(req.body);
-    res.status(200).send(newInvoice);
+    res.status(200).send({
+      message: "Invoice created successfully",
+      data: newInvoice,
+    });
   } catch (error) {
     res.status(500).send({
-      message: error.message || "Some error occurred while creating the Invoice.",
+      message:
+        error.message || "Some error occurred while creating the Invoice.",
     });
   }
 };
-
 
 const getInvoiceById = async (req, res) => {
   try {
@@ -90,10 +103,14 @@ const getInvoiceById = async (req, res) => {
     const invoice = await InvoiceDetail.findById(invoiceId);
     if (!invoice) {
       return res.status(404).json({
-        message: "Invoive Not  found with This id " , invoiceId,
+        message: "Invoive Not  found with This id ",
+        invoiceId,
       });
     }
-    res.status(200).json(invoice);
+    res.status(200).json({
+      message: "Get  Invoice successfully",
+      invoice: invoice,
+    });
   } catch (error) {
     console.error("Error retrieving Invoive: ", error);
     res.status(500).json({
@@ -104,13 +121,16 @@ const getInvoiceById = async (req, res) => {
 
 const getAllInvoice = async (req, res) => {
   try {
-    const user =req.user._id;
+    const user = req.user._id;
 
-    const invoices = await InvoiceDetail.find({user:user});
+    const invoices = await InvoiceDetail.find({ user: user });
 
     // console.log("userId",user)
 
-    res.status(200).send(invoices);
+    res.status(200).send({
+      message: "Get All Invoices successfully",
+      invoices: invoices,
+    });
     // console.log("Get All InvoiceDetail", invoices);
   } catch (error) {
     res.status(500).send({
@@ -131,7 +151,12 @@ const deleteInvoice = async (req, res) => {
         .send({ message: "invoice not found for deletion." });
     }
 
-    return res.status(200).json({ message: "Successfully deleted record of the InvoiveDetail",invoiceId });
+    return res
+      .status(200)
+      .json({
+        message: "Successfully deleted record of the InvoiveDetail",
+        invoiceId,
+      });
     //console.log("Deleted invoice", deletedinvoice);
   } catch (error) {
     res.status(500).send({
@@ -161,7 +186,9 @@ const updatePaidInvoiceStatus = async (req, res) => {
       return res.status(404).send({ message: "invoice not found for update." });
     }
 
-    res.status(200).send(updatedinvoice);
+    res.status(200).send({
+      message: "Invoice Status Upadated successfully",
+      updatedinvoice:updatedinvoice});
     //console.log("Updated invoice", updatedinvoice);
   } catch (error) {
     res.status(500).send({
@@ -191,7 +218,9 @@ const updateUnpaidInvoiceStatus = async (req, res) => {
       return res.status(404).send({ message: "invoice not found for update." });
     }
 
-    res.status(200).send(updatedinvoice);
+    res.status(200).send({
+      message: "Invoice Status Upadated successfully",
+      updatedinvoice: updatedinvoice});
     //console.log("Updated invoice", updatedinvoice);
   } catch (error) {
     res.status(500).send({
@@ -213,10 +242,17 @@ const updateInvoice = async (req, res) => {
     );
 
     if (!updatedinvoice) {
-      return res.status(404).send({ message: "invoice not found for update. againt this Id " ,invoiceId});
+      return res
+        .status(404)
+        .send({
+          message: "invoice not found for update. againt this Id ",
+          invoiceId,
+        });
     }
 
-    res.status(200).send(updatedinvoice);
+    res.status(200).send({
+      message: "Invoice updated successfully",
+      updatedinvoice:updatedinvoice});
     //console.log("Updated invoice", updatedinvoice);
   } catch (error) {
     res.status(500).send({

@@ -127,12 +127,14 @@ const updateSubscription = async (req, res) => {
       user.subscription.endDate.setMonth(
         user.subscription.endDate.getMonth() + 3
       ); 
-    } else {
-      user.planeName = planeName || "Free";
-      user.maxInvoices = Math.min(maxInvoice || 3);
-      user.maxClients = Math.min(maxClient || 3);
+    } else if (planeName==='Free') {
+      user.planeName = planeName 
+      user.maxInvoices = 3;
+      user.maxClients = 3;
+      // user.maxInvoices = Math.min(maxInvoice || 3);
+      // user.maxClients = Math.min(maxClient || 3);
       user.price = 0;
-      user.subscription.isActive = false;
+      user.subscription.isActive = true;
       user.userRole = "User";
       user.subscription.startDate = new Date();
       user.subscription.endDate = new Date(user.subscription.startDate);

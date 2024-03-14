@@ -52,19 +52,19 @@ const userSchema = new mongoose.Schema({
   },
   planeName: {
     type: String,
-    enum: ["Free","Basic", "Standard", "Premium"],
-    // default: "Basic",
+    enum: ["Pending","Free","Basic", "Standard", "Premium"],
+    default: "Pending",
     required: false,
   },
   maxInvoices: {
     type: Number,
-    default: 3,
+    default: 0,
     required: true,
 
   },
   maxClients: {
     type: Number,
-    default: 3,
+    default: 0,
     required: true,
 
   },
