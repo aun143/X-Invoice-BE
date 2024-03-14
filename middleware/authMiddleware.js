@@ -15,7 +15,7 @@
 //       if (!userExist) return res.sendStatus(401);
 
 //       req.user = userExist;
-    
+
 //       next();
 //     });
 //   } catch (error) {
@@ -24,9 +24,6 @@
 // };
 
 // module.exports = { protectRoutes };
-
-
-
 
 // const protectRoutes = async (req, res, next) => {
 //   try {
@@ -80,21 +77,35 @@ const protectRoutes = async (req, res, next) => {
 
       if (!userExist.subscription || !userExist.subscription.isActive) {
         if (userExist.invoices && userExist.invoices.length >= 0) {
-          return res.status(403).json({ message: "You have reached the maximum number of invoices allowed" });
+          return res.status(403).json({
+            message: "You have reached the maximum number of invoices allowed",
+          });
         }
         if (userExist.clients && userExist.clients.length >= 0) {
-          return res.status(403).json({ message: "You have reached the maximum number of clients allowed" });
+          return res.status(403).json({
+            message: "You have reached the maximum number of clients allowed",
+          });
         }
       } else {
         const maxInvoicesAllowed = userExist.subscription.maxInvoices || 0;
         const maxClientsAllowed = userExist.subscription.maxClients || 0;
 
-        if (userExist.invoices && userExist.invoices.length >= maxInvoicesAllowed) {
-          return res.status(403).json({ message: "You have reached the maximum number of invoices allowed" });
+        if (
+          userExist.invoices &&
+          userExist.invoices.length >= maxInvoicesAllowed
+        ) {
+          return res.status(403).json({
+            message: "You have reached the maximum number of invoices allowed",
+          });
         }
 
-        if (userExist.clients && userExist.clients.length >= maxClientsAllowed) {
-          return res.status(403).json({ message: "You have reached the maximum number of clients allowed" });
+        if (
+          userExist.clients &&
+          userExist.clients.length >= maxClientsAllowed
+        ) {
+          return res.status(403).json({
+            message: "You have reached the maximum number of clients allowed",
+          });
         }
       }
 

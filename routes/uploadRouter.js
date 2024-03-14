@@ -1,4 +1,3 @@
-
 const express = require("express");
 const { imageHandler } = require("../controllers/uploadController");
 // const { protectRoutes } = require("../Middleware/authMiddleware");
@@ -14,9 +13,11 @@ router.post("/file", async (req, res) => {
 
     if (!result || !result.secure_url) {
       console.error("Secure URL is undefined in Cloudinary response:", result);
-      return res.status(500).json({ success: false, error: "Image upload failed" });
+      return res
+        .status(500)
+        .json({ success: false, error: "Image upload failed" });
     }
-    
+
     const { secure_url, public_id } = result;
 
     res.status(200).json({ success: true, url: secure_url, public_id });

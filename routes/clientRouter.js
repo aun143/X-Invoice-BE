@@ -10,7 +10,6 @@ const {
 const { protectRoutes } = require("../middleware/authMiddleware");
 router.use(protectRoutes);
 
-
 router.post("/createClient", createClient);
 router.get("/getAllClient", getAllClient);
 router.get("/getClient/:id", getClientById);

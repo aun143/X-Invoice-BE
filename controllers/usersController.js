@@ -90,10 +90,10 @@ const updateSubscription = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    if (planeName === 'Premium') {
+    if (planeName === "Premium") {
       user.planeName = planeName;
-      user.maxInvoices  = -1; 
-      user.maxClients  = -1; 
+      user.maxInvoices = -1;
+      user.maxClients = -1;
       user.price = 500;
       user.subscription.isActive = true;
       user.userRole = "iSuperAdmin";
@@ -102,7 +102,7 @@ const updateSubscription = async (req, res) => {
       user.subscription.endDate.setMonth(
         user.subscription.endDate.getMonth() + 12
       );
-    } else if (planeName === 'Standard') {
+    } else if (planeName === "Standard") {
       user.planeName = planeName;
       user.maxInvoices = 100;
       user.maxClients = 100;
@@ -113,9 +113,8 @@ const updateSubscription = async (req, res) => {
       user.subscription.endDate = new Date(user.subscription.startDate);
       user.subscription.endDate.setMonth(
         user.subscription.endDate.getMonth() + 6
-      ); 
-    }
-    else if (planeName === 'Basic') {
+      );
+    } else if (planeName === "Basic") {
       user.planeName = planeName;
       user.maxInvoices = 30;
       user.maxClients = 30;
@@ -126,9 +125,9 @@ const updateSubscription = async (req, res) => {
       user.subscription.endDate = new Date(user.subscription.startDate);
       user.subscription.endDate.setMonth(
         user.subscription.endDate.getMonth() + 3
-      ); 
-    } else if (planeName==='Free') {
-      user.planeName = planeName 
+      );
+    } else if (planeName === "Free") {
+      user.planeName = planeName;
       user.maxInvoices = 3;
       user.maxClients = 3;
       // user.maxInvoices = Math.min(maxInvoice || 3);
@@ -153,8 +152,6 @@ const updateSubscription = async (req, res) => {
     res.status(500).json({ error: "Failed to update subscription" });
   }
 };
-
-
 
 // const LoginUser = async (req, res) => {
 //   try {
@@ -441,7 +438,7 @@ const updateUser = async (req, res) => {
         .status(400)
         .json({ type: "bad", message: "Email must be valid and contain '@' " });
     }
-   
+
     if (req.body.password) {
       req.body.password = await hashPassword(req.body.password);
     }

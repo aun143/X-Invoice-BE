@@ -82,10 +82,10 @@ const createBusinessProfile = async (req, res) => {
         message: "City must contain only letters from A-Z and a-z",
       });
     }
-    if (profileBody.city.length < 3 || profileBody.city.length > 20) {
+    if (profileBody.city.length < 3 || profileBody.city.length > 15) {
       return res.status(400).json({
         type: "bad",
-        message: "city must be between 3 and 20 characters",
+        message: "city must be between 3 and 15 characters",
       });
     }
     if (profileBody.companyName) {
@@ -97,11 +97,11 @@ const createBusinessProfile = async (req, res) => {
       }
       if (
         profileBody.companyName.length < 3 ||
-        profileBody.companyName.length > 10
+        profileBody.companyName.length > 20
       ) {
         return res.status(400).json({
           type: "bad",
-          message: "companyName must be between 3 and 10 characters",
+          message: "companyName must be between 3 and 20 characters",
         });
       }
     }
@@ -139,7 +139,8 @@ const createBusinessProfile = async (req, res) => {
 
       return res.status(200).send({
         message: "Created Business Profile successfully",
-        createProfile:populatedUser});
+        createProfile: populatedUser,
+      });
     } else {
       return res.status(404).json({
         message:
@@ -166,7 +167,8 @@ const getAllBusinessProfile = async (req, res) => {
 
     res.status(200).send({
       message: "Get All Business profile successfully",
-      getAllProfiles:records});
+      getAllProfiles: records,
+    });
     // console.log("Get All BusinessProfiles", records);
   } catch (error) {
     res.status(500).send({
@@ -189,7 +191,8 @@ const getBusinessProfileById = async (req, res) => {
 
     res.status(200).json({
       message: "Get Business profile Successfully",
-      getRecord:record});
+      getRecord: record,
+    });
   } catch (error) {
     console.error("Error retrieving business profile: ", error);
     res.status(500).json({
@@ -246,10 +249,10 @@ const updateBusinessProfile = async (req, res) => {
         message: "First name must contain only letters from A-Z and a-z",
       });
     }
-    if (updateData.firstName.length < 3 || updateData.firstName.length > 20) {
+    if (updateData.firstName.length < 3 || updateData.firstName.length > 10) {
       return res.status(400).json({
         type: "bad",
-        message: "firstName must be between 3 and 20 characters",
+        message: "firstName must be between 3 and 10 characters",
       });
     }
     if (!/^[a-z A-Z]+$/.test(updateData.lastName)) {
@@ -258,10 +261,10 @@ const updateBusinessProfile = async (req, res) => {
         message: "Last name must contain only letters from A-Z and a-z",
       });
     }
-    if (updateData.lastName.length < 3 || updateData.lastName.length > 20) {
+    if (updateData.lastName.length < 3 || updateData.lastName.length > 10) {
       return res.status(400).json({
         type: "bad",
-        message: "lastName must be between 3 and 20 characters",
+        message: "lastName must be between 3 and 10 characters",
       });
     }
     if (!isValidEmail(updateData.email)) {
@@ -282,10 +285,10 @@ const updateBusinessProfile = async (req, res) => {
         message: "City must contain only letters from A-Z and a-z",
       });
     }
-    if (updateData.city.length < 3 || updateData.city.length > 20) {
+    if (updateData.city.length < 3 || updateData.city.length > 15) {
       return res.status(400).json({
         type: "bad",
-        message: "City must be between 3 and 20 characters",
+        message: "City must be between 3 and 15 characters",
       });
     }
     if (updateData.companyName) {
@@ -332,7 +335,8 @@ const updateBusinessProfile = async (req, res) => {
 
     res.status(200).send({
       message: "Business profile updated successfully",
-      updatedData:updatedRecord});
+      updatedData: updatedRecord,
+    });
   } catch (error) {
     res.status(500).send({
       message:

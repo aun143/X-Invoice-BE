@@ -18,7 +18,6 @@ router.delete("/deletebusinessProfile/:id", deleteBusinessProfile);
 router.put("/updatebusinessProfile/:id", updateBusinessProfile);
 router.get("/getBusinessProfile/:id", getBusinessProfileById);
 
-
 module.exports = {
   businessRouter: router,
 };

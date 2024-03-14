@@ -1,5 +1,5 @@
 const cloudinary = require("cloudinary").v2;
-require('dotenv').config();
+require("dotenv").config();
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -14,7 +14,7 @@ const handleUpload = async (file, folderName) => {
       folder: folderName.folderName, // Specify the folder where the image will be stored
     };
     // console.log("folder",folderName.folderName)
-    
+
     const res = await cloudinary.uploader.upload(file, uploadOptions);
     return res;
   } catch (error) {

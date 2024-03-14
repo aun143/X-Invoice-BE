@@ -86,6 +86,11 @@ const InvoiceSchema = new mongoose.Schema({
     type: Number,
     required: false,
     default: 0,
+  }, 
+  blance: {
+    type: Number,
+    required: false,
+    // default: 0,
   },
   url: {
     type: String,
