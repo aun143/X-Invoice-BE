@@ -82,10 +82,9 @@ const createInvoice = async (req, res) => {
     }
     req.body.user = user._id;
     const newInvoice = await InvoiceDetail.create(req.body);
-    res.status(200).send({
-      message: "Invoice created successfully",
-      data: newInvoice,
-    });
+    res.status(200).send(
+     newInvoice,
+    );
   } catch (error) {
     res.status(500).send({
       message:
@@ -104,10 +103,9 @@ const getInvoiceById = async (req, res) => {
         invoiceId,
       });
     }
-    res.status(200).json({
-      message: "Get  Invoice successfully",
-      invoice: invoice,
-    });
+    res.status(200).json(
+      invoice,
+    );
   } catch (error) {
     console.error("Error retrieving Invoive: ", error);
     res.status(500).json({
@@ -124,10 +122,9 @@ const getAllInvoice = async (req, res) => {
 
     // console.log("userId",user)
 
-    res.status(200).send({
-      message: "Get All Invoices successfully",
-      invoices: invoices,
-    });
+    res.status(200).send(
+      invoices,
+    );
     // console.log("Get All InvoiceDetail", invoices);
   } catch (error) {
     res.status(500).send({
