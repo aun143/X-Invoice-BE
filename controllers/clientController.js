@@ -22,31 +22,35 @@ const createClient = async (req, res) => {
     }
     req.body.user = userId;
 
-    if (!/^[a-zA-Z]+$/.test(req.body.firstName)) {
-      return res.status(400).json({
-        type: "bad",
-        message: "First name must contain only letters from A-Z and a-z",
-      });
-    }
+ if(req.body.firstName)
+ {
+  if (!/^[a-zA-Z]+$/.test(req.body.firstName)) {
+    return res.status(400).json({
+      type: "bad",
+      message: "First name must contain only letters from A-Z and a-z",
+    });
+  }
+  if (req.body.firstName.length < 3 || req.body.firstName.length > 10) {
+    return res.status(400).json({
+      type: "bad",
+      message: "firstName must be between 3 and 10 characters",
+    });
+  }
+ }
 
-    if (req.body.firstName.length < 3 || req.body.firstName.length > 10) {
-      return res.status(400).json({
-        type: "bad",
-        message: "firstName must be between 3 and 10 characters",
-      });
-    }
-    if (!/^[a-zA-Z]+$/.test(req.body.lastName)) {
-      return res.status(400).json({
-        type: "bad",
-        message: "Last name must contain only letters from A-Z and a-z",
-      });
-    }
-    if (req.body.lastName.length < 3 || req.body.lastName.length > 10) {
-      return res.status(400).json({
-        type: "bad",
-        message: "lastName must be between 3 and 10 characters",
-      });
-    }
+ if(req.body.lastName){ if (!/^[a-zA-Z]+$/.test(req.body.lastName)) {
+  return res.status(400).json({
+    type: "bad",
+    message: "Last name must contain only letters from A-Z and a-z",
+  });
+}
+if (req.body.lastName.length < 3 || req.body.lastName.length > 10) {
+  return res.status(400).json({
+    type: "bad",
+    message: "lastName must be between 3 and 10 characters",
+  });
+}}
+   
     if (!isValidEmail(req.body.email)) {
       return res
         .status(400)
@@ -64,14 +68,15 @@ const createClient = async (req, res) => {
         message: "City must be between 3 and 15 characters",
       });
     }
+
+  if(req.body.state)
+  {
     if (!/^[a-zA-Z]+$/.test(req.body.state)) {
       return res.status(400).json({
         type: "bad",
         message: "State name must contain only letters from A-Z and a-z",
       });
     }
-  if(req.body.state)
-  {
     if (req.body.state.length < 3 || req.body.state.length > 10) {
       return res.status(400).json({
         type: "bad",

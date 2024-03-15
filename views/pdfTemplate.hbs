@@ -112,7 +112,7 @@ td.center {
       </div>
 
 
-      <div class="section-right">
+      <div class="section-right" style="margin-left:220px; margin-top:10px;">
         <p ><strong >Invoice No.:</strong> <br> <span id="invoiceNumber">{{invoiceData.invoiceNumber}}</span></p>
        <p><strong>Date:</strong><br> <span id="date">{{formatDate invoiceData.date}}</span></p>
 
@@ -129,7 +129,7 @@ td.center {
   <span id="postalCodeTo">{{clientData.postalCode}}</span> <span id="cityTo">{{clientData.city}}</span><br>
     <span id="countryTo">{{clientData.country}}</span></p><br>
       </div>
-      <div class="section-right">
+      <div class="section-right"  style="margin-left:220px; margin-top:10px">
         <p>
           <strong>Purchase Order Number:
             
@@ -159,7 +159,7 @@ td.center {
         </div>
     {{/each}}
 </div> --}}
-<div class="table-container">
+<div class="table-container" style="margin-top:10px;">
             <table>
                 <thead id="itemsContainer">
                     <tr>
@@ -169,9 +169,9 @@ td.center {
                         <th>Amount</th>
                     </tr>
                 </thead>
-             <tbody id="itemsContainer">
+             <tbody id="itemsContainer"  style="margin-top:10px;">
     {{#each invoiceData.items}}
-    <tr>
+    <tr  style="margin-top:10px;">
         <td class="center">{{this.description}}</td>
         <td class="center">{{this.quantity}}</td>
         <td class="center">{{this.rate}}</td>
@@ -183,8 +183,8 @@ td.center {
         </div>
 
 
-
-<hr>
+<br>
+<hr  style="margin-top:10px;">
   <div style="display: flex; justify-content: space-between; margin-left: 220px; margin-top: 10px;">
     <div style="text-align: left">
         <p><strong>Subtotal:</strong></p>
@@ -201,11 +201,12 @@ td.center {
         <p><span id="total" style="margin-top: 7px;">{{invoiceData.total}}</span></p>
     </div>
 </div>
-
+    <br>
       <div style="margin-top:10px;">
         <p><strong >Invoice Notes:</strong></p>
         <p><span id="notes">{{invoiceData.notes}}</span></p>
       </div>
+  
       <hr />
     
       <div style="display: flex; margin-top:10px;">
