@@ -65,8 +65,8 @@
 </head>
 <body>
     <div style="margin: 40px;"><h2 style="display:flex; justify-content:center;"></h2>
-  <div style="display:flex;">
-    <div style="flex: 1;">
+  <div style="display:flex; justify-content:flex-start; align-items:flex-center;">
+    <div class="justify-center flex items-center">
         <h3 style="margin-left:10px;">
             <span style="border:1px solid black; padding:3px;">{{invoiceData.paymentStatus}}</span>
             <span style="margin-left: 12px;">{{invoiceData.invoiceName}}</span>
@@ -75,7 +75,7 @@
             <span id="description">{{invoiceData.description}}</span>
         </p> --}}
     </div>
-    <div style="display:flex; justify-content:flex-start; align-items:flex-end;">
+    <div style="display:flex; "class="ml-64">
        {{#if invoiceData.url}}
             <img src="{{invoiceData.url}}" alt="Invoice Image" style="width:12rem; margin-right:2rem; border:1px solid black;">
         {{else}}
@@ -107,7 +107,7 @@
 
     <div class="section">
       <div class="">
-      <p class="font-semibold">To:</p>
+      <p class="font-bold">To:</p>
       <p> <span id="firstNameFrom">{{clientData.firstName}}</span>
       <span id="lastNameFrom">{{clientData.lastName}}</span><br>
       <span id="address1From">{{clientData.address1}}</span><br>
