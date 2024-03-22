@@ -4,84 +4,67 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Information PDF</title>
-      
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-
-      .section {
-        display: flex;
-        justify-content: space-between;
-        flex-direction: row;
-      }
-
-
-      .section-left,
-      .section-right {
-        width: 50%;
-      
-      }
-
-
-      .section-left {
-        display: flex;
-        flex-direction: column;
-      }
-
-
-      .section-right {
-    
-        text-align: left;
-      }
-
-p{
-    margin:10px;
-    padding:0px;
-}
-      {{!-- #paymentStatus {
-      padding: 10px 10px ;
-      border: 1px solid black;
-      font-weight: bold;
-      font-size: 15px;
-      border-radius: 5px;
-  } --}}
-.table-container {
-            overflow-x: auto;
-          margin: -10px;
+        body, h2, h3, p, strong, span {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 100;
+            
         }
-
+        .section {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+        }
+        .section-left,
+        .section-right {
+            width: 50%;
+        }
+        .section-left {
+            display: flex;
+            flex-direction: column;
+        }
+        .section-right {
+            text-align: left;
+        }
+        p {
+            margin: 10px;
+            padding: 0px;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: -10px;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
         }
-
         th, td {
             width: 25%; 
             text-align: left;
             padding: 8px;
         }
-            {{!-- border: 1px solid #dddddd; --}}
-
         th {
             background-color: #f2f2f2;
             text-align: center;
         }
-td.center {
-    text-align: center;
-}   .footer {
-        position: fixed;
-        bottom: 0;
-        margin-bottom: 20px;
-        width: 100%;
-        background-color: #f2f2f2; 
-        text-align: center;
-        padding: 10px 0;
-    }
-
-
-
+        td.center {
+            text-align: center;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            margin-bottom: 20px;
+            width: 100%;
+            background-color: #f2f2f2; 
+            text-align: center;
+            padding: 10px 0;
+        }
     </style>
-  </head>
+</head>
 <body>
-    <div style="margin: 40px;"><h2 style="display:flex; justify-content:center;">X-INVOICE</h2>
+    <div style="margin: 40px;"><h2 style="display:flex; justify-content:center;"></h2>
   <div style="display:flex;">
     <div style="flex: 1;">
         <h3 style="margin-left:10px;">
@@ -100,66 +83,51 @@ td.center {
         {{/if}}
     </div>
 </div>
-
+<br>
     <div class="section">
-      <div class="section-left">
-        <p><strong>From:</strong></p>
+      <div class="">
+      <p class="font-semibold">From:</p>
       <p> <span id="firstNameFrom">{{businessData.firstName}}</span>
-        <span id="lastNameFrom">{{businessData.lastName}}</span><br>
-    <span id="address1From">{{businessData.address1}}</span><br>
+      <span id="lastNameFrom">{{businessData.lastName}}</span><br>
+      <span id="address1From">{{businessData.address1}}</span><br>
       <span id="postalCodeFrom">{{businessData.postalCode}}</span> <span id="cityFrom">{{businessData.city}}</span><br>
       <span id="countryFrom">{{businessData.country}}</span></p>
       </div>
 
 
       <div class="section-right">
-        <p ><strong >Invoice No.:</strong> <br> <span id="invoiceNumber">{{invoiceData.invoiceNumber}}</span></p>
-       <p><strong>Date:</strong><br> <span id="date">{{formatDate invoiceData.date}}</span></p>
+        <p class="font-semibold">Invoice No <br> <span id="invoiceNumber">{{invoiceData.invoiceNumber}}</span></p>
+        <br>
+       <p class="font-semibold">Date<br> <span id="date">{{formatDate invoiceData.date}}</span></p>
 
         {{!-- <p><strong>Date:</strong><br> <span id="date">{{invoiceData.date}}</span></p> --}}
       </div>
     </div>
-
+<br>
 
     <div class="section">
-      <div class="section-left">
-        <p><strong>To:</strong></p><p>
-  <span id="firstNameTo">{{clientData.firstName}}</span> <span id="lastNameTo">{{clientData.lastName}}</span><br>
-    <span id="address1To">{{clientData.address1}}</span><br>
-  <span id="postalCodeTo">{{clientData.postalCode}}</span> <span id="cityTo">{{clientData.city}}</span><br>
-    <span id="countryTo">{{clientData.country}}</span></p><br>
+      <div class="">
+      <p class="font-semibold">To:</p>
+      <p> <span id="firstNameFrom">{{clientData.firstName}}</span>
+      <span id="lastNameFrom">{{clientData.lastName}}</span><br>
+      <span id="address1From">{{clientData.address1}}</span><br>
+      <span id="postalCodeFrom">{{clientData.postalCode}}</span> <span id="cityFrom">{{clientData.city}}</span><br>
+      <span id="countryFrom">{{clientData.country}}</span></p>
       </div>
       <div class="section-right">
-        <p>
-          <strong>Purchase Order Number:
-            
-          </strong><br> <span id="purchaseOrderNumber">{{invoiceData.purchaseOrderNumber}}</span></p>
-       <p><strong>Invoice Due:
-       </strong><br> <span id="invoiceDueDate">{{formatDate invoiceData.invoiceDueDate}}</span></p>
+           <p class="font-semibold">Invoice Due
+       <br> <span id="invoiceDueDate">{{formatDate invoiceData.invoiceDueDate}}</span></p>
+       <br>
+        <p class="font-semibold">
+          Purchase Order Number <br> <span id="purchaseOrderNumber">{{invoiceData.purchaseOrderNumber}}</span></p>
+    
+         
 
         {{!-- <p><strong>Invoice Due:</strong><br> <span id="invoiceDueDate">{{invoiceData.invoiceDueDate}}</span></p> --}}
       </div>
     </div>
-
-
-      
-{{!-- <div style="display: flex; justify-content: space-between;">
-    <p><strong>Description</strong></p>
-    <p><strong>Quantity</strong></p>
-    <p><strong>Rate</strong></p>
-    <p><strong>Amount</strong></p>
-</div>
-<div id="itemsContainer">
-    {{#each invoiceData.items}}
-        <div style="display: flex; justify-content: space-between;">
-            <p>{{this.description}}</p>
-            <p>{{this.quantity}}</p>
-            <p>{{this.rate}}</p>
-            <p>{{this.amount}}</p>
-        </div>
-    {{/each}}
-</div> --}}
-<div class="table-container">
+<div class="border mt-14"></div>
+<div class="table-container" style="margin-top: 10px;">
             <table>
                 <thead id="itemsContainer">
                     <tr>
@@ -181,49 +149,37 @@ td.center {
 </tbody>
             </table>
         </div>
+<div class="border border-gray-200 mt-8"></div>
 
-
-
-<hr>
-  <div style="display: flex; justify-content: space-between; margin-left: 220px; margin-top: 10px;">
+  <div style="display: flex; justify-content: space-between; margin-left: 220px;"class="mt-4">
     <div style="text-align: left">
-        <p><strong>Subtotal:</strong></p>
+      
+        <p class="font-semibold" >Sub Total</p>
         {{!-- <p style="margin-bottom: 10px;"><strong>Total:</strong></p> --}}
-        <p style="text-align: center; background-color: gray;">
-            <strong id="paymentStatus">
-                Balance:
-            </strong>
+        <p class="font-semibold bg-red-300"style="text-align: center; margin-top:20px">
+                Balance
         </p>
     </div>
+    <br>
     <div style="text-align: right ; margin-right:55px;">
-        <p><span id="subtotal">{{invoiceData.subtotal}}</span></p>
+        <p class="font-semibold"><span id="subtotal" >{{invoiceData.subtotal}} {{ invoiceData.currency }}</span></p>
         {{!-- <p><span id="total">{{invoiceData.total}}</span></p> --}}
-        <p><span id="total" style="margin-top: 7px;">{{invoiceData.total}}</span></p>
+        <p  style="margin-top: 20px;"><span id="total">{{invoiceData.subtotal}} {{ invoiceData.currency }}</span></p>
     </div>
 </div>
-
-      <div style="margin-top:10px;">
-        <p><strong >Invoice Notes:</strong></p>
-        <p><span id="notes">{{invoiceData.notes}}</span></p>
+      <div style="margin-top:50px;">
+        <p class="font-semibold">Invoice Notes :</p>
+        <p> class="font-semibold"<span id="notes">{{invoiceData.notes}}</span></p>
       </div>
-      <hr />
-    
+     <div class="border border-gray-200 my-14"></div>
       <div style="display: flex; margin-top:10px;">
-        <p><strong>Email:</strong>
+        <p class="font-semibold">Email :
         <p><span id="email">{{businessData.email}}</span></p>
         </p>
       </div>
-     
-
-
     </div>
-      <div><span class="footer" style="display:flex;  justify-content:center; margin-top:30px; absolute">Powered By AccellionX</span></div>
-
-
-  
+      {{!-- <div><span class="footer" style="display:flex;  justify-content:center; margin-top:30px; absolute">Powered By AccellionX</span></div> --}}
     </div>
     </div>
-
-
   </body>
 </html>

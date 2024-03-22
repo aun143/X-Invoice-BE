@@ -21,9 +21,12 @@ const sendEmailFile = async (req, res) => {
       // pdfUrl: invoice.pdfUrl
     };
 
-    await emailModel.send(to, subject, data);
-
-    res.status(200).json({ message: "Email Sent Successfully XInvoicely" });
+    const info = await emailModel.send(to, subject, data);
+    if (info) {
+      res.status(200).json({ message: "Email Sent Successfully XInvoicely" });
+    } else {
+      res.status(500).json({ message: "something went wrong" });
+    }
   } catch (error) {
     console.log("Error sending email", error);
     res.status(500).json({ message: "Error Sending Email XInvoicely", error });
