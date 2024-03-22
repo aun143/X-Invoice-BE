@@ -100,9 +100,8 @@
 
 
       <div class="section-right">
-        <p class="font-semibold">Invoice No <br> <span id="invoiceNumber">{{invoiceData.invoiceNumber}}</span></p>
-        <br>
-       <p class="font-semibold">Date<br> <span id="date">{{formatDate invoiceData.date}}</span></p>
+        <p ><strong >Invoice No.:</strong> <br> <span id="invoiceNumber">{{invoiceData.invoiceNumber}}</span></p>
+       <p><strong>Date:</strong><br> <span id="date">{{formatDate invoiceData.date}}</span></p>
 
         {{!-- <p><strong>Date:</strong><br> <span id="date">{{invoiceData.date}}</span></p> --}}
       </div>
@@ -119,19 +118,36 @@
       <span id="countryFrom">{{clientData.country}}</span></p>
       </div>
       <div class="section-right">
-           <p class="font-semibold">Invoice Due
-       <br> <span id="invoiceDueDate">{{formatDate invoiceData.invoiceDueDate}}</span></p>
-       <br>
-        <p class="font-semibold">
-          Purchase Order Number <br> <span id="purchaseOrderNumber">{{invoiceData.purchaseOrderNumber}}</span></p>
-    
-         
+        <p>
+          <strong>Purchase Order Number:
+            
+          </strong><br> <span id="purchaseOrderNumber">{{invoiceData.purchaseOrderNumber}}</span></p>
+       <p><strong>Invoice Due:
+       </strong><br> <span id="invoiceDueDate">{{formatDate invoiceData.invoiceDueDate}}</span></p>
 
         {{!-- <p><strong>Invoice Due:</strong><br> <span id="invoiceDueDate">{{invoiceData.invoiceDueDate}}</span></p> --}}
       </div>
     </div>
-<div class="border mt-14"></div>
-<div class="table-container" style="margin-top: 10px;">
+
+
+      
+{{!-- <div style="display: flex; justify-content: space-between;">
+    <p><strong>Description</strong></p>
+    <p><strong>Quantity</strong></p>
+    <p><strong>Rate</strong></p>
+    <p><strong>Amount</strong></p>
+</div>
+<div id="itemsContainer">
+    {{#each invoiceData.items}}
+        <div style="display: flex; justify-content: space-between;">
+            <p>{{this.description}}</p>
+            <p>{{this.quantity}}</p>
+            <p>{{this.rate}}</p>
+            <p>{{this.amount}}</p>
+        </div>
+    {{/each}}
+</div> --}}
+<div class="table-container">
             <table>
                 <thead id="itemsContainer">
                     <tr>
@@ -141,9 +157,9 @@
                         <th>Amount</th>
                     </tr>
                 </thead>
-             <tbody id="itemsContainer">
+             <tbody id="itemsContainer"  style="margin-top:10px;">
     {{#each invoiceData.items}}
-    <tr>
+    <tr  style="margin-top:10px;">
         <td class="center">{{this.description}}</td>
         <td class="center">{{this.quantity}}</td>
         <td class="center">{{this.rate}}</td>
@@ -155,7 +171,10 @@
         </div>
 <div class="border border-gray-200 mt-8"></div>
 
-  <div style="display: flex; justify-content: space-between; margin-left: 220px;"class="mt-4">
+
+
+<hr>
+  <div style="display: flex; justify-content: space-between; margin-left: 220px; margin-top: 10px;">
     <div style="text-align: left">
       
         <p class="font-semibold" >Sub Total</p>
@@ -171,11 +190,13 @@
         <p  style="margin-top: 20px;"><span id="total">{{invoiceData.subtotal}} {{ invoiceData.currency }}</span></p>
     </div>
 </div>
-      <div style="margin-top:50px;">
-        <p class="font-semibold">Invoice Notes :</p>
-        <p> class="font-semibold"<span id="notes">{{invoiceData.notes}}</span></p>
+
+      <div style="margin-top:10px;">
+        <p><strong >Invoice Notes:</strong></p>
+        <p><span id="notes">{{invoiceData.notes}}</span></p>
       </div>
-     <div class="border border-gray-200 my-14"></div>
+      <hr />
+    
       <div style="display: flex; margin-top:10px;">
         <p class="font-semibold">Email :
         <p><span id="email">{{businessData.email}}</span></p>

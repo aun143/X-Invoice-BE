@@ -100,7 +100,7 @@ const updateSubscription = async (req, res) => {
       user.subscription.startDate = new Date();
       user.subscription.endDate = new Date(user.subscription.startDate);
       user.subscription.endDate.setMonth(
-        user.subscription.endDate.getMonth() + 12
+        user.subscription.endDate.getMonth() + 1
       );
     } else if (planeName === "Standard") {
       user.planeName = planeName;
@@ -137,9 +137,9 @@ const updateSubscription = async (req, res) => {
       user.userRole = "User";
       user.subscription.startDate = new Date();
       user.subscription.endDate = new Date(user.subscription.startDate);
-      user.subscription.endDate.setFullYear(
-        user.subscription.endDate.getFullYear() + 1
-      );
+      user.subscription.endDate.setMonth(
+        user.subscription.endDate.getMonth() + 1
+      ); 
     }
 
     user = await user.save();
