@@ -7,10 +7,9 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        body, h2, h3, p, strong, span {
+        body, h2,tr, h3, p, strong, span {
             font-family: 'Poppins', sans-serif;
             font-weight: 100;
-            
         }
         .section {
             display: flex;
@@ -61,18 +60,23 @@
             text-align: center;
             padding: 10px 0;
         }
+        .invoice-status {
+    border: 1px solid black;
+    background-color: gray;
+}
+
     </style>
 </head>
 <body>
-    <div style="margin: 40px;"><h2 style="display:flex; justify-content:center;"></h2>
+    <div style="margin: 40px;"><h2 class="font-semibold" style="display:flex; justify-content:center;">X-INVOICE</h2>
   <div style="display:flex;">
     <div style="flex: 1;">
-        <h3 style="margin-left:10px;">
-            <span style="border:1px solid black; padding:3px;">{{invoiceData.paymentStatus}}</span>
-            <span style="margin-left: 12px;">{{invoiceData.invoiceName}}</span>
+        <h3 style="margin-left:0px;">
+    <span class="font-semibold invoice-status">{{invoiceData.paymentStatus}}</span>
+            <span class="font-semibold" style="margin-left: 12px;">{{invoiceData.invoiceName}}</span>
         </h3>
         <p>
-            <span id="description">{{invoiceData.description}}</span>
+            {{!-- <span id="description">{{invoiceData.description}}</span> --}}
         </p>
     </div>
     <div style="display:flex; justify-content:flex-start; align-items:flex-end;">
