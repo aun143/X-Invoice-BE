@@ -11,7 +11,7 @@ const helpers = require("handlebars-helpers")();
 // Register the eq helper
 handlebars.registerHelper(helpers);
 handlebars.registerHelper("formatDate", function (date) {
-  const formattedDate = new Date(date).toLocaleDateString();
+  const formattedDate = new Date(date).toLocaleDateString("en-CA");
   return formattedDate;
 });
 
