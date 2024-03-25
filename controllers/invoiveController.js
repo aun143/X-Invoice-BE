@@ -109,20 +109,36 @@ const getInvoiceById = async (req, res) => {
     const invoice = await InvoiceDetail.findById(invoiceId);
     if (!invoice) {
       return res.status(404).json({
-        message: "Invoive Not  found with This id ",
+        message: "Invoice not found with this ID",
         invoiceId,
       });
     }
-    res.status(200).json(
-      invoice,
-    );
+
+    // Formatting the date
+    const formattedInvoice = {
+      ...invoice.toObject(),
+      // Assuming the date field is named 'date', replace it with the actual field name if different
+      date: invoice.date.toLocaleDateString("en-CA", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+      }),
+      invoiceDueDate: invoice.invoiceDueDate.toLocaleDateString("en-CA", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+      }),
+    };
+
+    res.status(200).json(formattedInvoice);
   } catch (error) {
-    console.error("Error retrieving Invoive: ", error);
+    console.error("Error retrieving Invoice: ", error);
     res.status(500).json({
-      message: "Internal server error while retrieving the Invoive.",
+      message: "Internal server error while retrieving the Invoice.",
     });
   }
 };
+
 
 const getAllInvoice = async (req, res) => {
   try {
@@ -245,16 +261,16 @@ const updateInvoice = async (req, res) => {
       updateData,
       { new: true }
     );
-    if(req.body.invoiceName)
-    { 
-    if (req.body.invoiceName.length < 3 || req.body.invoiceName.length > 20) {
-      return res.status(400).json({
-        type: "bad",
-        message: "Invoice Name must be between 3 and 20 characters",
-      });
-    }
-
-}
+   if(req.body.invoiceName)
+      { 
+      if (req.body.invoiceName.length < 3 || req.body.invoiceName.length > 20) {
+        return res.status(400).json({
+          type: "bad",
+          message: "Invoice Name must be between 3 and 20 characters",
+        });
+      }
+  
+  }
     if (!updatedinvoice) {
       return res.status(404).send({
         message: "invoice not found for update. againt this Id ",
