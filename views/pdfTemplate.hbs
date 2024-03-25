@@ -7,10 +7,10 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
+      html { -webkit-print-color-adjust: exact; }
         body, h2, h3, p, strong, span {
             font-family: 'Poppins', sans-serif;
             font-weight: 100;
-            
         }
         .section {
             display: flex;
@@ -64,18 +64,21 @@
     </style>
 </head>
 <body>
-    <div style="margin: 40px;"><h2 style="display:flex; justify-content:center;"></h2>
-  <div style="display:flex; justify-content:flex-start; align-items:flex-center;">
-    <div class="justify-center flex items-center">
+    <div class="" ><h2 style="display:flex; justify-content:center;" class="my-6 font-semibold text-2xl">X-Invoice</h2>
+  <div class=" justify-start items-center grid w-full grid-cols-2">
+    <div class="m-6 justify-start items-center grid col-span-1">
         <h3 style="margin-left:10px;">
-            <span style="border:1px solid black; padding:3px;">{{invoiceData.paymentStatus}}</span>
-            <span style="margin-left: 12px;">{{invoiceData.invoiceName}}</span>
+            <span style="background-color: 
+              {{#if (eq invoiceData.paymentStatus "Paid")}} #10C0CB 
+              {{else if (eq invoiceData.paymentStatus "Unpaid")}} #FFB74D 
+              {{else}} #bababa 
+              {{/if}};" class="border p-4 rounded-md font-semibold text-white" >
+              {{invoiceData.paymentStatus}}
+            </span>
+            <span style="margin-left: 12px; " class="font-semibold text-lg">{{invoiceData.invoiceName}}</span>
         </h3>
-        {{!-- <p>
-            <span id="description">{{invoiceData.description}}</span>
-        </p> --}}
     </div>
-    <div style="display:flex; "class="ml-64">
+    <div  class="justify-start items-center grid col-span-1">
        {{#if invoiceData.url}}
             <img src="{{invoiceData.url}}" alt="Invoice Image" style="width:12rem; margin-right:2rem; border:1px solid black;">
         {{else}}
@@ -84,6 +87,7 @@
     </div>
 </div>
 <br>
+<div class="mx-10" >
     <div class="section">
       <div class="">
       <p class="font-semibold">From:</p>
@@ -116,7 +120,7 @@
       </div>
       <div class="section-right">
            <p class="font-semibold">Invoice Due
-       <br> <span id="invoiceDueDate">{{formatDate invoiceData.invoiceDueDate}}</span></p>
+       <br> <span id="invoiceDueDate" >{{formatDate invoiceData.invoiceDueDate}}</span></p>
        <br>
         <p class="font-semibold">
           Purchase Order Number <br> <span id="purchaseOrderNumber">{{invoiceData.purchaseOrderNumber}}</span></p>
@@ -156,10 +160,18 @@
       
         <p class="font-semibold" >Sub Total</p>
         {{!-- <p style="margin-bottom: 10px;"><strong>Total:</strong></p> --}}
-        <p class="font-semibold bg-red-300"style="text-align: center; margin-top:20px">
-                Balance
+        <p class="font-semibold"style="text-align: center; margin-top:20px">
+            <span style="background-color: 
+              {{#if (eq invoiceData.paymentStatus "Paid")}} #10C0CB 
+              {{else if (eq invoiceData.paymentStatus "Unpaid")}} #FFB74D 
+              {{else}} #bababa 
+              {{/if}};" class="border p-4 rounded-md font-semibold text-white" >
+             Balance
+            </span>
         </p>
     </div>
+   
+
     <br>
     <div style="text-align: right ; margin-right:55px;">
         <p class="font-semibold"><span id="subtotal" >{{invoiceData.subtotal}} {{ invoiceData.currency }}</span></p>
@@ -169,7 +181,7 @@
 </div>
       <div style="margin-top:50px;">
         <p class="font-semibold">Invoice Notes :</p>
-        <p> class="font-semibold"<span id="notes">{{invoiceData.notes}}</span></p>
+        <p><span id="notes">{{invoiceData.notes}}</span></p>
       </div>
      <div class="border border-gray-200 my-14"></div>
       <div style="display: flex; margin-top:10px;">
@@ -179,6 +191,7 @@
       </div>
     </div>
       {{!-- <div><span class="footer" style="display:flex;  justify-content:center; margin-top:30px; absolute">Powered By AccellionX</span></div> --}}
+    </div>
     </div>
     </div>
   </body>

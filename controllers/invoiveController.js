@@ -80,6 +80,16 @@ const createInvoice = async (req, res) => {
         message: "Your subscription plan has expired. Please update your plan.",
       });
     }
+      if(req.body.invoiceName)
+      { 
+      if (req.body.invoiceName.length < 3 || req.body.invoiceName.length > 20) {
+        return res.status(400).json({
+          type: "bad",
+          message: "Invoice Name must be between 3 and 20 characters",
+        });
+      }
+  
+  }
     req.body.user = user._id;
     const newInvoice = await InvoiceDetail.create(req.body);
     res.status(200).send(
@@ -228,13 +238,23 @@ const updateInvoice = async (req, res) => {
   try {
     const invoiceId = req.params.id;
     const updateData = req.body;
+    
 
     const updatedinvoice = await InvoiceDetail.findByIdAndUpdate(
       invoiceId,
       updateData,
       { new: true }
     );
+    if(req.body.invoiceName)
+    { 
+    if (req.body.invoiceName.length < 3 || req.body.invoiceName.length > 20) {
+      return res.status(400).json({
+        type: "bad",
+        message: "Invoice Name must be between 3 and 20 characters",
+      });
+    }
 
+}
     if (!updatedinvoice) {
       return res.status(404).send({
         message: "invoice not found for update. againt this Id ",
