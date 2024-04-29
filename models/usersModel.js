@@ -49,7 +49,7 @@ const userSchema = new mongoose.Schema({
       default: null,
     },
   },
-  planeName: {
+  planName: {
     type: String,
     enum: ["Pending", "Free", "Basic", "Standard", "Premium"],
     default: "Pending",
@@ -65,7 +65,7 @@ const userSchema = new mongoose.Schema({
     default: 0,
     required: true,
   },
-  price: {
+  amount: {
     type: Number,
     default: 0,
     required: true,

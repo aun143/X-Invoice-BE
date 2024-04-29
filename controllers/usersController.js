@@ -81,77 +81,77 @@ function isValidEmail(email) {
   return emailRegex.test(email);
 }
 
-const updateSubscription = async (req, res) => {
-  try {
-    const { userId, planeName, maxInvoice, maxClient, price } = req.body;
+// const updateSubscription = async (req, res) => {
+//   try {
+//     const { userId, planeName, maxInvoice, maxClient, price } = req.body;
 
-    let user = await userModel.findById(userId);
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
+//     let user = await userModel.findById(userId);
+//     if (!user) {
+//       return res.status(404).json({ error: "User not found" });
+//     }
 
-    if (planeName === "Premium") {
-      user.planeName = planeName;
-      user.maxInvoices = -1;
-      user.maxClients = -1;
-      user.price = 500;
-      user.subscription.isActive = true;
-      user.userRole = "iSuperAdmin";
-      user.subscription.startDate = new Date();
-      user.subscription.endDate = new Date(user.subscription.startDate);
-      user.subscription.endDate.setMonth(
-        user.subscription.endDate.getMonth() + 1
-      );
-    } else if (planeName === "Standard") {
-      user.planeName = planeName;
-      user.maxInvoices = 100;
-      user.maxClients = 100;
-      user.price = 100;
-      user.subscription.isActive = true;
-      user.userRole = "superAdmin";
-      user.subscription.startDate = new Date();
-      user.subscription.endDate = new Date(user.subscription.startDate);
-      user.subscription.endDate.setMonth(
-        user.subscription.endDate.getMonth() + 6
-      );
-    } else if (planeName === "Basic") {
-      user.planeName = planeName;
-      user.maxInvoices = 30;
-      user.maxClients = 30;
-      user.price = 30;
-      user.subscription.isActive = true;
-      user.userRole = "Admin";
-      user.subscription.startDate = new Date();
-      user.subscription.endDate = new Date(user.subscription.startDate);
-      user.subscription.endDate.setMonth(
-        user.subscription.endDate.getMonth() + 3
-      );
-    } else if (planeName === "Free") {
-      user.planeName = planeName;
-      user.maxInvoices = 3;
-      user.maxClients = 3;
-      // user.maxInvoices = Math.min(maxInvoice || 3);
-      // user.maxClients = Math.min(maxClient || 3);
-      user.price = 0;
-      user.subscription.isActive = true;
-      user.userRole = "User";
-      user.subscription.startDate = new Date();
-      user.subscription.endDate = new Date(user.subscription.startDate);
-      user.subscription.endDate.setMonth(
-        user.subscription.endDate.getMonth() + 1
-      ); 
-    }
+//     if (planeName === "Premium") {
+//       user.planeName = planeName;
+//       user.maxInvoices = -1;
+//       user.maxClients = -1;
+//       user.price = 500;
+//       user.subscription.isActive = true;
+//       user.userRole = "iSuperAdmin";
+//       user.subscription.startDate = new Date();
+//       user.subscription.endDate = new Date(user.subscription.startDate);
+//       user.subscription.endDate.setMonth(
+//         user.subscription.endDate.getMonth() + 1
+//       );
+//     } else if (planeName === "Standard") {
+//       user.planeName = planeName;
+//       user.maxInvoices = 100;
+//       user.maxClients = 100;
+//       user.price = 100;
+//       user.subscription.isActive = true;
+//       user.userRole = "superAdmin";
+//       user.subscription.startDate = new Date();
+//       user.subscription.endDate = new Date(user.subscription.startDate);
+//       user.subscription.endDate.setMonth(
+//         user.subscription.endDate.getMonth() + 6
+//       );
+//     } else if (planeName === "Basic") {
+//       user.planeName = planeName;
+//       user.maxInvoices = 30;
+//       user.maxClients = 30;
+//       user.price = 30;
+//       user.subscription.isActive = true;
+//       user.userRole = "Admin";
+//       user.subscription.startDate = new Date();
+//       user.subscription.endDate = new Date(user.subscription.startDate);
+//       user.subscription.endDate.setMonth(
+//         user.subscription.endDate.getMonth() + 3
+//       );
+//     } else if (planeName === "Free") {
+//       user.planeName = planeName;
+//       user.maxInvoices = 3;
+//       user.maxClients = 3;
+//       // user.maxInvoices = Math.min(maxInvoice || 3);
+//       // user.maxClients = Math.min(maxClient || 3);
+//       user.price = 0;
+//       user.subscription.isActive = true;
+      // user.userRole = "User";
+      // user.subscription.startDate = new Date();
+      // user.subscription.endDate = new Date(user.subscription.startDate);
+      // user.subscription.endDate.setMonth(
+      //   user.subscription.endDate.getMonth() + 1
+//       ); 
+//     }
 
-    user = await user.save();
+//     user = await user.save();
 
-    res
-      .status(200)
-      .json({ message: "Subscription updated successfully", user });
-  } catch (error) {
-    console.error("Error updating subscription:", error);
-    res.status(500).json({ error: "Failed to update subscription" });
-  }
-};
+//     res
+//       .status(200)
+//       .json({ message: "Subscription updated successfully", user });
+//   } catch (error) {
+//     console.error("Error updating subscription:", error);
+//     res.status(500).json({ error: "Failed to update subscription" });
+//   }
+// };
 
 // const LoginUser = async (req, res) => {
 //   try {
@@ -465,7 +465,7 @@ const updateUser = async (req, res) => {
 
 module.exports = {
   createUser,
-  updateSubscription,
+  // updateSubscription,
   LoginUser,
   forgotPassword,
   getAllUser,

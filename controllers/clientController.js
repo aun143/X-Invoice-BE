@@ -5,6 +5,11 @@ const createClient = async (req, res) => {
   try {
     const userId = req.user._id;
     const user = req.user;
+    if (!user.subscription.isActive) {
+      return res.status(400).json({
+        message: "Your subscription plan is not active. Please activate your subscription to create client.",
+      });
+    }
     const maxClientsAllowed = user.subscription.isActive ? user.maxClients : 3;
 
     const userClientsCount = await ClientDetail.countDocuments({
@@ -245,11 +250,15 @@ const getClientById = async (req, res) => {
         message: "Client profile not found with id " + profileId,
       });
     }
-
-    res.status(200).json(
-      // message: "Get Client profile Successfully",
-      record
-    );
+    const formattedClient = {
+      ...record.toObject(),
+      createdAt: record.createdAt.toLocaleDateString("en-CA", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+      }),
+    };
+    res.status(200).json(formattedClient);
   } catch (error) {
     console.error("Error retrieving client profile: ", error);
     res.status(500).json({

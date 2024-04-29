@@ -92,6 +92,10 @@ const ClientSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const ClientDetail = mongoose.model("ClienteDetail", ClientSchema);

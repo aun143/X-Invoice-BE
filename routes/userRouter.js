@@ -12,8 +12,11 @@ const {
 } = require("../controllers/usersController");
 const { protectRoutes } = require("../middleware/authMiddleware");
 
+const errorMiddleware = require("../middleware/error");
+
 router.post("/create", createUser);
-router.put("/subscription", updateSubscription);
+// router.put("/subscription", updateSubscription);
+
 router.post("/loginUser", LoginUser);
 router.post("/forgotpassword", forgotPassword);
 

@@ -44,25 +44,16 @@ const validStatusValues = ["Pending", "Paid", "Unpaid"];
 //   }
 // };
 
-// const createInvoice = async (req, res) => {
-//   try {
-//     const user = req.user._id;
-//     req.body.user = user;
 
-//     const newinvoice = await InvoiceDetail.create(req.body);
-//     res.status(200).send(newinvoice);
-//     //console.log("Newinvoice", newinvoice);
-//   } catch (error) {
-//     res.status(500).send({
-//       message:
-//         error.message || "Some error occurred while creating the Invoice.",
-//     });
-//   }
-// };
 
 const createInvoice = async (req, res) => {
   try {
     const user = req.user;
+    if (!user.subscription.isActive) {
+      return res.status(400).json({
+        message: "Your subscription plan is not active. Please activate your subscription to create invoices.",
+      });
+    }
     const maxInvoicesAllowed = user.subscription.isActive
       ? user.maxInvoices
       : 3;
@@ -124,6 +115,11 @@ const getInvoiceById = async (req, res) => {
         year: "numeric",
       }),
       invoiceDueDate: invoice.invoiceDueDate.toLocaleDateString("en-CA", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+      }),  
+      createdAt: invoice.createdAt.toLocaleDateString("en-CA", {
         month: "2-digit",
         day: "2-digit",
         year: "numeric",

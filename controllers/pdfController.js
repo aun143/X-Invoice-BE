@@ -72,7 +72,7 @@ const generatePDF = async (req, res) => {
 
     // Generate PDF
     html_to_pdf
-      .generatePdf({ content: html }, { format: "A4" })
+      .generatePdf({ content: html }, { format: "A3" })
       .then((pdfBuffer) => {
         res.set({
           "Content-Type": "application/pdf",
