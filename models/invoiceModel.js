@@ -109,6 +109,20 @@ const InvoiceSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  pdfPassword: {
+    type: Number,
+    required: false,
+  }, 
+  viewCount: {
+    type: Number,
+    required: false,
+    default: 0
+  },  
+  downloadCount: {
+    type: Number,
+    required: false,
+    default: 0,
+  },
   items: [
     {
       description: {

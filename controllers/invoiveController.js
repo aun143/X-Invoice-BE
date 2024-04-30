@@ -106,6 +106,7 @@ const createInvoice = async (req, res) => {
 const getInvoiceById = async (req, res) => {
   try {
     const invoiceId = req.params.id;
+    const { tracking } = req.query; 
     const invoice = await InvoiceDetail.findById(invoiceId);
     if (!invoice) {
       return res.status(404).json({
@@ -114,6 +115,10 @@ const getInvoiceById = async (req, res) => {
       });
     }
 
+    if (tracking === invoice.trackingId) {
+      invoice.viewCount += 1;
+      await invoice.save();
+  }
     // Formatting the date
     const formattedInvoice = {
       ...invoice.toObject(),
@@ -129,7 +134,6 @@ const getInvoiceById = async (req, res) => {
         year: "numeric",
       }),
     };
-
     res.status(200).json(formattedInvoice);
   } catch (error) {
     console.error("Error retrieving Invoice: ", error);

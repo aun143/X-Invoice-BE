@@ -1,10 +1,22 @@
 const emailModel = require("../models/emailModel");
 const { InvoiceDetail } = require("../models/invoiceModel");
 
+function generateRandomPassword(length) {
+  const charset = "0123456987";
+  let password = "";
+  for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * charset.length);
+      password += charset[randomIndex];
+  }
+  return password;
+}
 const sendEmailFile = async (req, res) => {
+  
   const { to, subject, invoiceId } = req.body;
+  const password = generateRandomPassword(6);
   try {
     const invoice = await InvoiceDetail.findById(invoiceId);
+    invoice.viewCount += 1;
     const data = {
       receiver: invoice.receiver,
       description: invoice.description,
@@ -18,11 +30,13 @@ const sendEmailFile = async (req, res) => {
       invoiceDueDate: invoice.invoiceDueDate,
       invoiceLink: invoice.invoiceLink,
       sender: invoice.sender,
-      // pdfUrl: invoice.pdfUrl
     };
+    invoice.pdfPassword = password;
+    await invoice.save();
 
-    await emailModel.send(to, subject, data);
+    console.log("invoice.viewCount",invoice.viewCount)
 
+    await emailModel.send(to, subject,invoiceId, data,password);
     res.status(200).json({ message: "Email Sent Successfully XInvoicely" });
   } catch (error) {
     console.log("Error sending email", error);
