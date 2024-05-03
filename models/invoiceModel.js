@@ -123,6 +123,10 @@ const InvoiceSchema = new mongoose.Schema({
     required: false,
     default: 0,
   },
+  pdfInvoiceLink:{
+    type: String,
+    required: false,
+  },
   items: [
     {
       description: {

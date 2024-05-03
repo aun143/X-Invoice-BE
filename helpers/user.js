@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const hashPassword = (password) =>
   new Promise(async (resolve, reject) => {
     try {
-      resolve(await bcrypt.hash(password, 12));
+      resolve(await bcrypt.hash(password,12));
     } catch (error) {
       reject(error);
     }

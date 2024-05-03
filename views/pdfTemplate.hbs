@@ -27,6 +27,7 @@
         }
         .section-right {
             text-align: left;
+            margin-left: 350px; 
         }
         p {
             margin: 10px;
@@ -80,9 +81,11 @@
     </div>
     <div  class="justify-start items-center grid col-span-1">
        {{#if invoiceData.url}}
-            <img src="{{invoiceData.url}}" alt="Invoice Image" style="width:12rem; margin-right:2rem; border:1px solid black;">
+            <img src="{{invoiceData.url}}" alt="Invoice Image" style="width:12rem; margin-right:2rem, border:1px solid black;margin-left:150px">
         {{else}}
-            <img src="https://res.cloudinary.com/dfbsbullu/image/upload/v1709745593/iribv5nqn6iovph3buhe.png" alt="Static Image" style="width:6rem; margin-right:6rem;">
+<img src="https://res.cloudinary.com/dfbsbullu/image/upload/v1709745593/iribv5nqn6iovph3buhe.png" alt="Static Image" style="width:6rem; margin-left:150px;">
+    {{!-- <img src="https://res.cloudinary.com/dfbsbullu/image/upload/v1709745593/iribv5nqn6iovph3buhe.png" alt="Static Image" style="" "margin-left:150px;"> --}}
+
         {{/if}}
     </div>
 </div>
@@ -97,8 +100,6 @@
       <span id="postalCodeFrom">{{businessData.postalCode}}</span> <span id="cityFrom">{{businessData.city}}</span><br>
       <span id="countryFrom">{{businessData.country}}</span></p>
       </div>
-
-
       <div class="section-right">
         <p class="font-semibold">Invoice No <br> <span id="invoiceNumber">{{invoiceData.invoiceNumber}}</span></p>
         <br>
@@ -108,7 +109,6 @@
       </div>
     </div>
 <br>
-
     <div class="section">
       <div class="">
       <p class="font-bold">To:</p>
