@@ -1,3 +1,4 @@
+const { comparewPassword } = require("../helpers/user");
 const { BusinessProfile } = require("../models/businessModel");
 const { ClientDetail } = require("../models/clientModel");
 const { InvoiceDetail } = require("../models/invoiceModel");
@@ -106,6 +107,7 @@ const createInvoice = async (req, res) => {
 const getInvoiceById = async (req, res) => {
   try {
     const invoiceId = req.params.id;
+    const { pdfPassword } = req.body;
     const invoice = await InvoiceDetail.findById(invoiceId);
     if (!invoice) {
       return res.status(404).json({
@@ -114,6 +116,16 @@ const getInvoiceById = async (req, res) => {
       });
     }
 
+    // if (pdfPassword) {
+    //   const isPasswordMatch = await comparewPassword(pdfPassword, invoice.pdfPassword);
+    //   if (!isPasswordMatch) {
+    //     return res.status(401).json({
+    //       message: "Incorrect password provided for this invoice",
+    //     });
+    //   }
+    // }
+
+    console.log("invoice.pdfPassword",invoice.pdfPassword)
     // Formatting the date
     const formattedInvoice = {
       ...invoice.toObject(),
@@ -129,7 +141,6 @@ const getInvoiceById = async (req, res) => {
         year: "numeric",
       }),
     };
-
     res.status(200).json(formattedInvoice);
   } catch (error) {
     console.error("Error retrieving Invoice: ", error);

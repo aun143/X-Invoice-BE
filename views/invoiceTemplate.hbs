@@ -8,11 +8,11 @@
       .sender-section { background-color: white; color: black; border: 1px solid
       #ccc; text-align: left; padding-left: 10px; margin: 0 auto; max-width:
       633px; } .container { border: 1px solid #ccc; padding: 20px; max-width:
-      600px; margin: 0 auto; } ul { list-style-type: none; padding: 0; } li {
+      602px; margin: 0 auto; } ul { list-style-type: none; padding: 0; } li {
       margin-bottom: 10px; } p { margin-bottom: 15px; } footer { margin-top:
       20px; border-top: 1px solid #ccc; padding-top: 10px; } .header {
       background-color: #0f012c; padding: 10px; font-style: italic; color:white;
-      max-width: 623px; margin: 0 auto; text-align: center; }
+      max-width: 625px; margin: 0 auto; text-align: center; }
     </style>
   </head>
   <body>
@@ -47,10 +47,13 @@
         {{!-- {{http://localhost:3010/pdf/generate?userId=65aa78568d6f3d1a7f909e1c&businessId=65ae51d686cd12e52252859d&invoiceId=65b35e67f7201b0951c95bfa}}</p> --}}
       {{! <p>Click the following link: <a href="http://localhost:3010/pdf/generate?userId=65aa78568d6f3d1a7f909e1c&businessId=65ae51d686cd12e52252859d&invoiceId=65b35e67f7201b0951c95bfa" target="_blank">Generate PDF</a></p> }}
 
-      <footer>
-        {{!-- Download From: --}}
-        <p>Pdf Link: {{pdfUrl}}</p>
-        <p>Best regards, {{sender.firstName}}</p>
+     <footer>
+             <li>Password: {{password}}</li>
+             {{!-- <li>Download PDF:</li> <a href="https://localhost:5173/invoice/{{invoiceId}}" target="_blank">PDF Link</a> --}}
+             <span style="display: inline-block; margin-left: 15px;">Download PDF:</span>
+             <a href="http://localhost:5173/invoice/{{invoiceId}}">PDF Link</a>
+             <li>Best regards, {{sender.firstName}}</li>
+
       </footer>
     </div>
   </body>

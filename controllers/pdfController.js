@@ -70,6 +70,8 @@ const generatePDF = async (req, res) => {
     const compiledTemplate = handlebars.compile(template, { noEscape: true });
     const html = compiledTemplate({ clientData, businessData, invoiceData });
 
+    // await InvoiceDetail.findByIdAndUpdate(invoiceIdToGeneratePDF, { pdfInvoiceLink: pdfInvoiceLink });
+
     // Generate PDF
     html_to_pdf
       .generatePdf({ content: html }, { format: "A4" })
