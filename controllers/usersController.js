@@ -96,7 +96,7 @@ const updateSubscription = async (req, res) => {
       user.maxClients = -1;
       user.price = 500;
       user.subscription.isActive = true;
-      user.userRole = "iSuperAdmin";
+      user.userRole = "I-SuperAdmin";
       user.subscription.startDate = new Date();
       user.subscription.endDate = new Date(user.subscription.startDate);
       user.subscription.endDate.setMonth(
@@ -108,7 +108,7 @@ const updateSubscription = async (req, res) => {
       user.maxClients = 100;
       user.price = 100;
       user.subscription.isActive = true;
-      user.userRole = "superAdmin";
+      user.userRole = "SuperAdmin";
       user.subscription.startDate = new Date();
       user.subscription.endDate = new Date(user.subscription.startDate);
       user.subscription.endDate.setMonth(
